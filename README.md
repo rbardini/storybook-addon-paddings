@@ -1,7 +1,7 @@
 # Storybook Paddings Addon
 
 [![npm package version](https://img.shields.io/npm/v/storybook-addon-paddings)](https://www.npmjs.com/package/storybook-addon-paddings)
-[![Build status](https://img.shields.io/github/workflow/status/rbardini/storybook-addon-paddings/main)](https://github.com/rbardini/storybook-addon-paddings/actions)
+[![Build status](https://img.shields.io/github/workflow/status/rbardini/storybook-addon-paddings/Main)](https://github.com/rbardini/storybook-addon-paddings/actions)
 [![Dependencies status](https://img.shields.io/david/rbardini/storybook-addon-paddings)](https://david-dm.org/rbardini/storybook-addon-paddings)
 [![devDependencies status](https://img.shields.io/david/dev/rbardini/storybook-addon-paddings)](https://david-dm.org/rbardini/storybook-addon-paddings?type=dev)
 
