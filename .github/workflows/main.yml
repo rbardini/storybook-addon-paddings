@@ -17,14 +17,14 @@ jobs:
       - name: Install
         run: npm ci
 
+      - name: Build
+        run: npm run build
+
       - name: Lint
         run: npm run lint
 
       - name: Type-check
         run: npm run type-check
-
-      - name: Build
-        run: npm run build
 
       - name: Release
         env:
