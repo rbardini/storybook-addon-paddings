@@ -1,0 +1,72 @@
+{
+  "name": "storybook-addon-paddings",
+  "version": "0.0.0-development",
+  "description": "A Storybook addon to add different paddings to your preview",
+  "keywords": [
+    "addon",
+    "padding",
+    "margin",
+    "spacing",
+    "react",
+    "storybook"
+  ],
+  "homepage": "https://github.com/rbardini/storybook-addon-paddings",
+  "bugs": {
+    "url": "https://github.com/rbardini/storybook-addon-paddings/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rbardini/storybook-addon-paddings.git"
+  },
+  "license": "MIT",
+  "author": "rbardini",
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "*.js",
+    "*.d.ts"
+  ],
+  "main": "dist/register.js",
+  "scripts": {
+    "build": "babel --extensions '.tsx' src -d dist",
+    "build-example": "npm run build-storybook --prefix example",
+    "lint": "eslint --ignore-path .gitignore --ext .js,.tsx .",
+    "postbuild": "tsc --declaration --emitDeclarationOnly",
+    "prebuild-example": "npm run build",
+    "preexample": "npm run build",
+    "example": "npm run storybook --prefix example",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@storybook/addons": "^5.3.9",
+    "@storybook/api": "^5.3.9",
+    "@storybook/client-logger": "^5.3.9",
+    "@storybook/components": "^5.3.9",
+    "@storybook/core-events": "^5.3.9",
+    "@storybook/theming": "^5.3.9",
+    "core-js": "^3.6.4",
+    "memoizerific": "^1.11.3",
+    "react": "^16.8.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.8.3",
+    "@babel/core": "7.8.3",
+    "@babel/plugin-proposal-class-properties": "7.8.3",
+    "@babel/preset-env": "7.8.3",
+    "@babel/preset-react": "7.8.3",
+    "@babel/preset-typescript": "7.8.3",
+    "@types/node": "13.5.0",
+    "@typescript-eslint/eslint-plugin": "2.17.0",
+    "@typescript-eslint/parser": "2.17.0",
+    "eslint": "6.8.0",
+    "eslint-config-airbnb": "18.0.1",
+    "eslint-plugin-import": "2.20.0",
+    "eslint-plugin-jsx-a11y": "6.2.3",
+    "eslint-plugin-react": "7.18.0",
+    "eslint-plugin-react-hooks": "2.3.0",
+    "husky": "4.2.1",
+    "lint-staged": "10.0.2",
+    "semantic-release": "16.0.3",
+    "typescript": "3.7.5"
+  }
+}

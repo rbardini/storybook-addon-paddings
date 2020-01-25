@@ -1,0 +1,14 @@
+{
+  "name": "storybook-addon-paddings-example",
+  "version": "0.0.0-development",
+  "scripts": {
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "devDependencies": {
+    "@babel/core": "7.8.3",
+    "@storybook/html": "5.3.6",
+    "babel-loader": "8.0.6",
+    "storybook-addon-paddings": "file:../"
+  }
+}
