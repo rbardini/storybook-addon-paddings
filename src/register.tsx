@@ -1,7 +1,7 @@
 import React from 'react';
 import { addons, types } from '@storybook/addons';
 
-import { ADDON_ID } from './constants';
+import { ADDON_ID, PARAM_KEY } from './constants';
 import PaddingSelector from './containers/PaddingSelector';
 
 addons.register(ADDON_ID, (api) => {
@@ -12,5 +12,6 @@ addons.register(ADDON_ID, (api) => {
     render: () => (
       <PaddingSelector api={api} />
     ),
+    paramKey: PARAM_KEY,
   });
 });
