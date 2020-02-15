@@ -2,7 +2,6 @@ import React, { Component, ReactNode } from 'react';
 import memoize from 'memoizerific';
 
 import { Combo, Consumer, API } from '@storybook/api';
-import { Global } from '@storybook/theming';
 
 import { IconButton, WithTooltip, TooltipLinkList } from '@storybook/components';
 
@@ -23,7 +22,6 @@ interface Input {
   default?: boolean;
 }
 
-const iframeId = 'storybook-preview-iframe';
 const defaultPadding = 'unset';
 
 const createPaddingSelectorItem = memoize(1000)(
@@ -76,7 +74,7 @@ const getDisplayedItems = memoize(10)(
   (
     list: Input[],
     selected: string | null,
-    change: (arg: { selected: string; name: string }) => void,
+    change: (arg: GlobalState) => void,
   ) => {
     let availablePaddingSelectorItems: Item[] = [];
 
@@ -124,39 +122,27 @@ export default class PaddingSelector extends Component<Props> {
           const selectedPadding = getSelectedPadding(items, selected);
 
           return items.length ? (
-            <>
-              {selectedPadding ? (
-                <Global
-                  styles={{
-                    [`#${iframeId}`]: {
-                      boxSizing: 'border-box',
-                      padding: selectedPadding,
-                    },
-                  }}
+            <WithTooltip
+              placement="top"
+              trigger="click"
+              tooltip={({ onHide }) => (
+                <TooltipLinkList
+                  links={getDisplayedItems(items, selectedPadding, (i) => {
+                    this.change(i);
+                    onHide();
+                  })}
                 />
-              ) : null}
-              <WithTooltip
-                placement="top"
-                trigger="click"
-                tooltip={({ onHide }) => (
-                  <TooltipLinkList
-                    links={getDisplayedItems(items, selectedPadding, (i) => {
-                      this.change(i);
-                      onHide();
-                    })}
-                  />
-                )}
-                closeOnClick
+              )}
+              closeOnClick
+            >
+              <IconButton
+                key="padding"
+                active={selectedPadding !== defaultPadding}
+                title="Change the paddings of the preview"
               >
-                <IconButton
-                  key="padding"
-                  active={selectedPadding !== defaultPadding}
-                  title="Change the paddings of the preview"
-                >
-                  <PaddingIcon />
-                </IconButton>
-              </WithTooltip>
-            </>
+                <PaddingIcon />
+              </IconButton>
+            </WithTooltip>
           ) : null;
         }}
       </Consumer>
