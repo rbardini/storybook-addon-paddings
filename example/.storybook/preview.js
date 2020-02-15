@@ -1,4 +1,4 @@
-import { addParameters } from '@storybook/html';
+import { addParameters } from '@storybook/react';
 
 addParameters({
   paddings: [

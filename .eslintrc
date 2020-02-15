@@ -28,7 +28,8 @@
   "rules": {
     "@typescript-eslint/explicit-function-return-type": "off",
     "import/extensions": ["error", "ignorePackages", { "tsx": "never" }],
-    "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }]
+    "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }],
+    "react/prop-types": "off"
   },
   "settings": {
     "import/resolver": {
