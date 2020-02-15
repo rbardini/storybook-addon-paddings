@@ -20,7 +20,7 @@
   },
   "license": "MIT",
   "author": "Rafael Bardini <rafael@rbardini.com> (https://rbardini.com)",
-  "main": "dist/register.js",
+  "main": "dist/index.js",
   "files": [
     "dist/**/*",
     "*.js",

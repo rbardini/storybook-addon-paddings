@@ -1,4 +1,7 @@
-import { addParameters } from '@storybook/react';
+import { addDecorator, addParameters } from '@storybook/react';
+import { withPaddings } from 'storybook-addon-paddings';
+
+addDecorator(withPaddings);
 
 addParameters({
   paddings: [
