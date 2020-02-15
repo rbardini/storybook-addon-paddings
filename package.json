@@ -3,12 +3,12 @@
   "version": "0.0.0-development",
   "description": "A Storybook addon to add different paddings to your preview",
   "keywords": [
+    "storybook",
     "addon",
     "padding",
     "margin",
     "spacing",
-    "react",
-    "storybook"
+    "whitespace"
   ],
   "homepage": "https://github.com/rbardini/storybook-addon-paddings",
   "bugs": {
@@ -19,30 +19,27 @@
     "url": "https://github.com/rbardini/storybook-addon-paddings.git"
   },
   "license": "MIT",
-  "author": "rbardini",
+  "author": "Rafael Bardini <rafael@rbardini.com> (https://rbardini.com)",
+  "main": "dist/register.js",
   "files": [
     "dist/**/*",
-    "README.md",
     "*.js",
     "*.d.ts"
   ],
-  "main": "dist/register.js",
   "scripts": {
     "build": "babel --extensions '.tsx' src -d dist",
-    "build-example": "npm run build-storybook --prefix example",
-    "lint": "eslint --ignore-path .gitignore --ext .js,.tsx .",
     "postbuild": "tsc --declaration --emitDeclarationOnly",
     "prebuild-example": "npm run build",
+    "build-example": "npm run build-storybook --prefix example",
     "preexample": "npm run build",
     "example": "npm run storybook --prefix example",
+    "lint": "eslint --ignore-path .gitignore --ext .js,.tsx .",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@storybook/addons": "^5.3.9",
     "@storybook/api": "^5.3.9",
-    "@storybook/client-logger": "^5.3.9",
     "@storybook/components": "^5.3.9",
-    "@storybook/core-events": "^5.3.9",
     "@storybook/theming": "^5.3.9",
     "core-js": "^3.6.4",
     "memoizerific": "^1.11.3",
