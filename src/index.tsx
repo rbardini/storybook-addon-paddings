@@ -33,7 +33,7 @@ const Story: FC<Props> = ({
     return () => channel.off(EVENTS.UPDATE, onUpdate);
   }, []);
 
-  return getStory(context);
+  return <>{getStory(context)}</>;
 };
 
 export const withPaddings = makeDecorator({
