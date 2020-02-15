@@ -28,13 +28,14 @@
   "rules": {
     "@typescript-eslint/explicit-function-return-type": "off",
     "import/extensions": ["error", "ignorePackages", { "tsx": "never" }],
-    "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }],
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["example/**/*.js"]}],
+    "react/jsx-filename-extension": ["error", { "extensions": [".js", ".tsx"] }],
     "react/prop-types": "off"
   },
   "settings": {
     "import/resolver": {
       "node": {
-        "extensions": [".tsx"]
+        "extensions": [".js", ".tsx"]
       }
     }
   }
