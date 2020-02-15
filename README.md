@@ -29,7 +29,7 @@ See [`example`](example) for a minimal working setup.
 
 ## Configuration
 
-The addon can configured globally and per story with the `paddings` parameter.
+The addon can be configured globally and per story with the `paddings` parameter.
 
 ### Global configuration
 
