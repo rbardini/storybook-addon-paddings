@@ -6,6 +6,7 @@ import {
 import { Global } from '@storybook/theming';
 
 import { EVENTS, PARAM_KEY } from './constants';
+import { GlobalState } from './containers/PaddingSelector';
 
 const bodyClass = 'sb-show-main';
 
@@ -29,7 +30,7 @@ const Story: FC<Props> = ({
 
   useEffect(() => {
     const channel = addons.getChannel();
-    const onUpdate = ({ selected }: any) => {
+    const onUpdate = ({ selected }: GlobalState) => {
       setPadding(selected);
     };
 

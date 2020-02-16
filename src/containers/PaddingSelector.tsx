@@ -97,9 +97,9 @@ const getDisplayedItems = memoize(10)(
   },
 );
 
-interface GlobalState {
-  name: string | undefined;
-  selected: string | undefined;
+export interface GlobalState {
+  name?: string;
+  selected?: string;
 }
 
 interface Props {
@@ -107,12 +107,15 @@ interface Props {
 }
 
 export default class PaddingSelector extends Component<Props> {
-  change = ({ selected, name }: GlobalState) => {
+  change = (state: GlobalState) => {
     const { api } = this.props;
+    const { selected } = state;
+
     if (typeof selected === 'string') {
       api.setAddonState<string>(PARAM_KEY, selected);
     }
-    api.emit(EVENTS.UPDATE, { selected, name });
+
+    api.emit(EVENTS.UPDATE, state);
   };
 
   render() {
