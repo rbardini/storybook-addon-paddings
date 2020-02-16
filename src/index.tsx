@@ -1,10 +1,13 @@
 /* eslint-disable import/prefer-default-export */
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
   addons, makeDecorator, WrapperSettings, StoryGetter, StoryContext,
 } from '@storybook/addons';
+import { Global } from '@storybook/theming';
 
 import { EVENTS, PARAM_KEY } from './constants';
+
+const bodyClass = 'sb-show-main';
 
 type Props = {
   getStory: StoryGetter;
@@ -21,19 +24,33 @@ const Story: FC<Props> = ({
     } = {},
   },
 }) => {
+  const [padding, setPadding] = useState('');
+  const story = getStory(context);
+
   useEffect(() => {
     const channel = addons.getChannel();
     const onUpdate = ({ selected }: any) => {
-      document.body.style.padding = selected;
+      setPadding(selected);
     };
 
-    document.body.style.transition = 'padding .3s';
     channel.on(EVENTS.UPDATE, onUpdate);
 
     return () => channel.off(EVENTS.UPDATE, onUpdate);
   }, []);
 
-  return <>{getStory(context)}</>;
+  return (
+    <>
+      <Global
+        styles={{
+          [`.${bodyClass}`]: {
+            padding,
+            transition: 'padding .3s',
+          },
+        }}
+      />
+      {story}
+    </>
+  );
 };
 
 export const withPaddings = makeDecorator({
