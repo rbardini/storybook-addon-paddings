@@ -33,9 +33,7 @@ const Story: FC<Props> = view(({
 
   useEffect(() => {
     const channel = addons.getChannel();
-    const onUpdate = ({ selected }: GlobalState) => {
-      setPadding(selected);
-    };
+    const onUpdate = ({ selected }: GlobalState) => setPadding(selected);
 
     channel.on(EVENTS.UPDATE, onUpdate);
 
@@ -47,7 +45,7 @@ const Story: FC<Props> = view(({
       <Global
         styles={{
           [`.${bodyClass}`]: {
-            padding: state.padding,
+            padding: !disabled && state.padding,
             transition: 'padding .3s',
           },
         }}
