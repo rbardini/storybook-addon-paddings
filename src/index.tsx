@@ -59,6 +59,7 @@ export const withPaddings = makeDecorator({
   name: 'withPaddings',
   parameterName: PARAM_KEY,
   allowDeprecatedUsage: true,
+  skipIfNoParametersOrOptions: true,
   wrapper: (getStory, context, settings) => (
     <Story
       getStory={getStory}
