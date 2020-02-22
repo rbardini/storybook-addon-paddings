@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
+import { store, view } from 'react-easy-state';
 import {
   addons, makeDecorator, WrapperSettings, StoryGetter, StoryContext,
 } from '@storybook/addons';
@@ -7,6 +8,9 @@ import { Global } from '@storybook/theming';
 
 import { EVENTS, PARAM_KEY } from './constants';
 import { GlobalState } from './containers/PaddingSelector';
+
+const state = store({ padding: '' });
+const setPadding = (padding: string) => { state.padding = padding; };
 
 const bodyClass = 'sb-show-main';
 
@@ -16,7 +20,7 @@ type Props = {
   settings: WrapperSettings;
 }
 
-const Story: FC<Props> = ({
+const Story: FC<Props> = view(({
   getStory,
   context,
   settings: {
@@ -25,7 +29,6 @@ const Story: FC<Props> = ({
     } = {},
   },
 }) => {
-  const [padding, setPadding] = useState('');
   const story = getStory(context);
 
   useEffect(() => {
@@ -44,7 +47,7 @@ const Story: FC<Props> = ({
       <Global
         styles={{
           [`.${bodyClass}`]: {
-            padding,
+            padding: state.padding,
             transition: 'padding .3s',
           },
         }}
@@ -52,7 +55,7 @@ const Story: FC<Props> = ({
       {story}
     </>
   );
-};
+});
 
 export const withPaddings = makeDecorator({
   name: 'withPaddings',
