@@ -1,4 +1,4 @@
-import React, { Component, ReactNode } from 'react';
+import React, { FC, ReactNode } from 'react';
 import memoize from 'memoizerific';
 
 import { Combo, Consumer, API } from '@storybook/api';
@@ -55,8 +55,10 @@ const getSelectedPadding = (list: Input[], currentSelectedValue: string): string
     return currentSelectedValue;
   }
 
-  if (list.find((i) => i.default)) {
-    return list.find((i) => i.default).value;
+  const defaultInput = list.find((i) => i.default);
+
+  if (defaultInput) {
+    return defaultInput.value;
   }
 
   return defaultPadding;
@@ -106,49 +108,46 @@ interface Props {
   api: API;
 }
 
-export default class PaddingSelector extends Component<Props> {
-  change = (state: GlobalState) => {
-    const { api } = this.props;
-    const { selected } = state;
+const update = (state: GlobalState, api: API) => {
+  const { selected } = state;
 
-    if (typeof selected === 'string') {
-      api.setAddonState<string>(PARAM_KEY, selected);
-    }
-
-    api.emit(EVENTS.UPDATE, state);
-  };
-
-  render() {
-    return (
-      <Consumer filter={mapper}>
-        {({ items, selected }: ReturnType<typeof mapper>) => {
-          const selectedPadding = getSelectedPadding(items, selected);
-
-          return items.length ? (
-            <WithTooltip
-              placement="top"
-              trigger="click"
-              tooltip={({ onHide }) => (
-                <TooltipLinkList
-                  links={getDisplayedItems(items, selectedPadding, (i) => {
-                    this.change(i);
-                    onHide();
-                  })}
-                />
-              )}
-              closeOnClick
-            >
-              <IconButton
-                key="padding"
-                active={selectedPadding !== defaultPadding}
-                title="Change the paddings of the preview"
-              >
-                <PaddingIcon />
-              </IconButton>
-            </WithTooltip>
-          ) : null;
-        }}
-      </Consumer>
-    );
+  if (typeof selected === 'string') {
+    api.setAddonState<string>(PARAM_KEY, selected);
   }
-}
+
+  api.emit(EVENTS.UPDATE, state);
+};
+
+const PaddingSelector: FC<Props> = ({ api }) => (
+  <Consumer filter={mapper}>
+    {({ items, selected }: ReturnType<typeof mapper>) => {
+      const selectedPadding = getSelectedPadding(items, selected);
+
+      return items.length ? (
+        <WithTooltip
+          placement="top"
+          trigger="click"
+          tooltip={({ onHide }) => (
+            <TooltipLinkList
+              links={getDisplayedItems(items, selectedPadding, (state) => {
+                update(state, api);
+                onHide();
+              })}
+            />
+          )}
+          closeOnClick
+        >
+          <IconButton
+            key="padding"
+            active={selectedPadding !== defaultPadding}
+            title="Change the paddings of the preview"
+          >
+            <PaddingIcon />
+          </IconButton>
+        </WithTooltip>
+      ) : null;
+    }}
+  </Consumer>
+);
+
+export default PaddingSelector;
