@@ -67,7 +67,7 @@ const getSelectedPadding = (list: Input[], currentSelectedValue: string): string
 const mapper = ({ api, state }: Combo): { items: Input[]; selected: string | null } => {
   const story = state.storiesHash[state.storyId];
   const list = story ? api.getParameters(story.id, PARAM_KEY) : [];
-  const selected = state.addons[PARAM_KEY] || null;
+  const selected = state.addons[PARAM_KEY] || defaultPadding;
 
   return { items: list || [], selected };
 };
@@ -75,7 +75,7 @@ const mapper = ({ api, state }: Combo): { items: Input[]; selected: string | nul
 const getDisplayedItems = memoize(10)(
   (
     list: Input[],
-    selected: string | null,
+    selected: string,
     change: (arg: GlobalState) => void,
   ) => {
     let availablePaddingSelectorItems: Item[] = [];
