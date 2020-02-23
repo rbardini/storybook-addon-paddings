@@ -6,7 +6,7 @@ import { IconButton, WithTooltip, TooltipLinkList } from '@storybook/components'
 import { PARAM_KEY, EVENTS } from '../constants';
 import PaddingIcon from '../components/PaddingIcon';
 
-interface Item {
+type Item = {
   id: string;
   title: string;
   onClick: () => void;
@@ -14,10 +14,19 @@ interface Item {
   right?: ReactNode;
 }
 
-interface Input {
+type Input = {
   name: string;
   value: string;
   default?: boolean;
+}
+
+type GlobalState = {
+  name?: string;
+  selected?: string;
+}
+
+type Props = {
+  api: API;
 }
 
 const defaultPadding = 'unset';
@@ -88,15 +97,6 @@ const getDisplayedItems = memoize(10)(
     return availablePaddingSelectorItems;
   },
 );
-
-interface GlobalState {
-  name?: string;
-  selected?: string;
-}
-
-interface Props {
-  api: API;
-}
 
 const PaddingSelector: FC<Props> = ({ api }) => {
   const items = useParameter(PARAM_KEY, []);

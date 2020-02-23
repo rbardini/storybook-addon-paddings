@@ -8,16 +8,16 @@ import { Global } from '@storybook/theming';
 
 import { EVENTS, PARAM_KEY } from './constants';
 
-const state = store({ padding: '' });
-const setPadding = (padding: string) => { state.padding = padding; };
-
-const bodyClass = 'sb-show-main';
-
 type Props = {
   getStory: StoryGetter;
   context: StoryContext;
   settings: WrapperSettings;
 }
+
+const state = store({ padding: '' });
+const setPadding = (padding: string) => { state.padding = padding; };
+
+const bodyClass = 'sb-show-main';
 
 const Story: FC<Props> = view(({
   getStory,
