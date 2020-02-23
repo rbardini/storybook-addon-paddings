@@ -1,8 +1,7 @@
 import React, { FC, ReactNode } from 'react';
 import memoize from 'memoizerific';
 
-import { Combo, Consumer, API } from '@storybook/api';
-
+import { API, useParameter } from '@storybook/api';
 import { IconButton, WithTooltip, TooltipLinkList } from '@storybook/components';
 
 import { PARAM_KEY, EVENTS } from '../constants';
@@ -64,14 +63,6 @@ const getSelectedPadding = (list: Input[], currentSelectedValue: string): string
   return defaultPadding;
 };
 
-const mapper = ({ api, state }: Combo): { items: Input[]; selected: string | null } => {
-  const story = state.storiesHash[state.storyId];
-  const list = story ? api.getParameters(story.id, PARAM_KEY) : [];
-  const selected = state.addons[PARAM_KEY] || defaultPadding;
-
-  return { items: list || [], selected };
-};
-
 const getDisplayedItems = memoize(10)(
   (
     list: Input[],
@@ -112,42 +103,39 @@ const update = (state: GlobalState, api: API) => {
   const { selected } = state;
 
   if (typeof selected === 'string') {
-    api.setAddonState<string>(PARAM_KEY, selected);
+    api.setAddonState(PARAM_KEY, selected);
   }
 
   api.emit(EVENTS.UPDATE, state);
 };
 
-const PaddingSelector: FC<Props> = ({ api }) => (
-  <Consumer filter={mapper}>
-    {({ items, selected }: ReturnType<typeof mapper>) => {
-      const selectedPadding = getSelectedPadding(items, selected);
+const PaddingSelector: FC<Props> = ({ api }) => {
+  const items = useParameter(PARAM_KEY, []);
+  const selectedPadding = getSelectedPadding(items, api.getAddonState(PARAM_KEY));
 
-      return items.length ? (
-        <WithTooltip
-          placement="top"
-          trigger="click"
-          tooltip={({ onHide }) => (
-            <TooltipLinkList
-              links={getDisplayedItems(items, selectedPadding, (state) => {
-                update(state, api);
-                onHide();
-              })}
-            />
-          )}
-          closeOnClick
-        >
-          <IconButton
-            key="padding"
-            active={selectedPadding !== defaultPadding}
-            title="Change the paddings of the preview"
-          >
-            <PaddingIcon />
-          </IconButton>
-        </WithTooltip>
-      ) : null;
-    }}
-  </Consumer>
-);
+  return items.length ? (
+    <WithTooltip
+      placement="top"
+      trigger="click"
+      tooltip={({ onHide }) => (
+        <TooltipLinkList
+          links={getDisplayedItems(items, selectedPadding, (state) => {
+            update(state, api);
+            onHide();
+          })}
+        />
+      )}
+      closeOnClick
+    >
+      <IconButton
+        key="padding"
+        active={selectedPadding !== defaultPadding}
+        title="Change the paddings of the preview"
+      >
+        <PaddingIcon />
+      </IconButton>
+    </WithTooltip>
+  ) : null;
+};
 
 export default PaddingSelector;
