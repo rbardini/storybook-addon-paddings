@@ -1,6 +1,5 @@
 import React, { FC, ReactNode } from 'react';
 import memoize from 'memoizerific';
-
 import { API, useParameter } from '@storybook/api';
 import { IconButton, WithTooltip, TooltipLinkList } from '@storybook/components';
 
@@ -90,7 +89,7 @@ const getDisplayedItems = memoize(10)(
   },
 );
 
-export interface GlobalState {
+interface GlobalState {
   name?: string;
   selected?: string;
 }
@@ -98,16 +97,6 @@ export interface GlobalState {
 interface Props {
   api: API;
 }
-
-const update = (state: GlobalState, api: API) => {
-  const { selected } = state;
-
-  if (typeof selected === 'string') {
-    api.setAddonState(PARAM_KEY, selected);
-  }
-
-  api.emit(EVENTS.UPDATE, state);
-};
 
 const PaddingSelector: FC<Props> = ({ api }) => {
   const items = useParameter(PARAM_KEY, []);
@@ -119,8 +108,9 @@ const PaddingSelector: FC<Props> = ({ api }) => {
       trigger="click"
       tooltip={({ onHide }) => (
         <TooltipLinkList
-          links={getDisplayedItems(items, selectedPadding, (state) => {
-            update(state, api);
+          links={getDisplayedItems(items, selectedPadding, ({ selected }) => {
+            api.setAddonState(PARAM_KEY, selected);
+            api.emit(EVENTS.UPDATE, selected);
             onHide();
           })}
         />

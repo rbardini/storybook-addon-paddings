@@ -7,7 +7,6 @@ import {
 import { Global } from '@storybook/theming';
 
 import { EVENTS, PARAM_KEY } from './constants';
-import { GlobalState } from './containers/PaddingSelector';
 
 const state = store({ padding: '' });
 const setPadding = (padding: string) => { state.padding = padding; };
@@ -29,15 +28,12 @@ const Story: FC<Props> = view(({
     } = {},
   },
 }) => {
-  const story = getStory(context);
-
   useEffect(() => {
     const channel = addons.getChannel();
-    const onUpdate = ({ selected }: GlobalState) => setPadding(selected);
 
-    channel.on(EVENTS.UPDATE, onUpdate);
+    channel.on(EVENTS.UPDATE, setPadding);
 
-    return () => channel.off(EVENTS.UPDATE, onUpdate);
+    return () => channel.off(EVENTS.UPDATE, setPadding);
   }, []);
 
   return (
@@ -50,7 +46,7 @@ const Story: FC<Props> = view(({
           },
         }}
       />
-      {story}
+      {getStory(context)}
     </>
   );
 });
