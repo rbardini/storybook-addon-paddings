@@ -25,11 +25,7 @@ type GlobalState = {
   selected?: string;
 }
 
-type Props = {
-  api: API;
-}
-
-const defaultPadding = 'unset';
+const defaultPadding = '';
 
 const createPaddingSelectorItem = memoize(1000)(
   (
@@ -77,7 +73,7 @@ const getDisplayedItems = memoize(10)(
     selected: string,
     change: (arg: GlobalState) => void,
   ) => {
-    let availablePaddingSelectorItems: Item[] = [];
+    const availablePaddingSelectorItems: Item[] = [];
 
     if (selected !== defaultPadding) {
       availablePaddingSelectorItems.push(
@@ -86,19 +82,18 @@ const getDisplayedItems = memoize(10)(
     }
 
     if (list.length) {
-      availablePaddingSelectorItems = [
-        ...availablePaddingSelectorItems,
+      availablePaddingSelectorItems.push(
         ...list.map(({ name, value }) => (
           createPaddingSelectorItem(null, name, value, true, change)
         )),
-      ];
+      );
     }
 
     return availablePaddingSelectorItems;
   },
 );
 
-const PaddingSelector: FC<Props> = ({ api }) => {
+const PaddingSelector: FC<{ api: API }> = ({ api }) => {
   const items = useParameter(PARAM_KEY, []);
   const selectedPadding = getSelectedPadding(items, api.getAddonState(PARAM_KEY));
 
