@@ -1,18 +1,10 @@
 /* eslint-disable import/prefer-default-export */
 import React, { FC, useEffect } from 'react';
 import { store, view } from 'react-easy-state';
-import {
-  addons, makeDecorator, WrapperSettings, StoryGetter, StoryContext,
-} from '@storybook/addons';
+import { addons, makeDecorator, WrapperSettings } from '@storybook/addons';
 import { Global } from '@storybook/theming';
 
 import { EVENTS, PARAM_KEY } from './constants';
-
-type Props = {
-  getStory: StoryGetter;
-  context: StoryContext;
-  settings: WrapperSettings;
-}
 
 const state = store({ initialized: false, padding: '' });
 const setPadding = (padding = '') => {
@@ -22,9 +14,8 @@ const setPadding = (padding = '') => {
 
 const bodyClass = 'sb-show-main';
 
-const Story: FC<Props> = view(({
-  getStory,
-  context,
+const Wrapper: FC<{ settings: WrapperSettings }> = view(({
+  children,
   settings: {
     parameters = {},
   },
@@ -64,7 +55,7 @@ const Story: FC<Props> = view(({
           },
         }}
       />
-      {getStory(context)}
+      {children}
     </>
   );
 });
@@ -75,10 +66,8 @@ export const withPaddings = makeDecorator({
   allowDeprecatedUsage: true,
   skipIfNoParametersOrOptions: true,
   wrapper: (getStory, context, settings) => (
-    <Story
-      getStory={getStory}
-      context={context}
-      settings={settings}
-    />
+    <Wrapper settings={settings}>
+      {getStory(context)}
+    </Wrapper>
   ),
 });
