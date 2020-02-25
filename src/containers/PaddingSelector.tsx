@@ -45,7 +45,7 @@ const createPaddingSelectorItem = memoize(1000)(
   }),
 );
 
-const getSelectedPadding = (list: Input[], currentSelectedValue: string): string => {
+const getSelectedPadding = (list: Input[], currentSelectedValue: string) => {
   if (!list.length) {
     return defaultPadding;
   }

@@ -14,6 +14,7 @@
     "@storybook/addon-links": "5.3.13",
     "@storybook/addons": "5.3.13",
     "@storybook/react": "5.3.13",
+    "@storybook/theming": "5.3.13",
     "babel-loader": "8.0.6",
     "storybook-addon-paddings": "file:../"
   }
