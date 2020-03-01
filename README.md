@@ -25,6 +25,15 @@ module.exports = {
 }
 ```
 
+within `.storybook/preview.js`:
+
+```js
+import { addDecorator } from '@storybook/react';
+import { withPaddings } from 'storybook-addon-paddings';
+
+addDecorator(withPaddings);
+```
+
 See [`example`](example) for a minimal working setup.
 
 ## Configuration
@@ -36,7 +45,10 @@ The addon can be configured globally and per story with the `paddings` parameter
 To add paddings to all stories, call `addParameters` in `.storybook/preview.js`:
 
 ```js
-import { addParameters } from '@storybook/html'; // or your Storybook framework
+import { addParameters } from '@storybook/react';
+import { withPaddings } from 'storybook-addon-paddings';
+
+addDecorator(withPaddings);
 
 addParameters({
   paddings: [
