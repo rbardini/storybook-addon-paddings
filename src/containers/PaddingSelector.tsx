@@ -3,7 +3,8 @@ import memoize from 'memoizerific';
 import { API, useParameter } from '@storybook/api';
 import { IconButton, WithTooltip, TooltipLinkList } from '@storybook/components';
 
-import { PARAM_KEY, EVENTS } from '../constants';
+import { DEFAULT_PADDING, PARAM_KEY, EVENTS } from '../constants';
+import { getSelectedPadding } from '../helpers';
 import PaddingIcon from '../components/PaddingIcon';
 
 type Item = {
@@ -25,8 +26,6 @@ type GlobalState = {
   selected?: string;
 }
 
-const defaultPadding = '';
-
 const createPaddingSelectorItem = memoize(1000)(
   (
     id: string,
@@ -45,28 +44,6 @@ const createPaddingSelectorItem = memoize(1000)(
   }),
 );
 
-const getSelectedPadding = (list: Input[], currentSelectedValue: string) => {
-  if (!list.length) {
-    return defaultPadding;
-  }
-
-  if (currentSelectedValue === defaultPadding) {
-    return currentSelectedValue;
-  }
-
-  if (list.find((i) => i.value === currentSelectedValue)) {
-    return currentSelectedValue;
-  }
-
-  const defaultInput = list.find((i) => i.default);
-
-  if (defaultInput) {
-    return defaultInput.value;
-  }
-
-  return defaultPadding;
-};
-
 const getDisplayedItems = memoize(10)(
   (
     list: Input[],
@@ -75,9 +52,9 @@ const getDisplayedItems = memoize(10)(
   ) => {
     const availablePaddingSelectorItems: Item[] = [];
 
-    if (selected !== defaultPadding) {
+    if (selected !== DEFAULT_PADDING) {
       availablePaddingSelectorItems.push(
-        createPaddingSelectorItem('reset', 'Clear paddings', defaultPadding, null, change),
+        createPaddingSelectorItem('reset', 'Clear paddings', DEFAULT_PADDING, null, change),
       );
     }
 
@@ -114,7 +91,7 @@ const PaddingSelector: FC<{ api: API }> = ({ api }) => {
     >
       <IconButton
         key="padding"
-        active={selectedPadding !== defaultPadding}
+        active={selectedPadding !== DEFAULT_PADDING}
         title="Change the paddings of the preview"
       >
         <PaddingIcon />
