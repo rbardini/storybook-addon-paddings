@@ -4,7 +4,7 @@ import { API, useParameter } from '@storybook/api';
 import { IconButton, WithTooltip, TooltipLinkList } from '@storybook/components';
 
 import { DEFAULT_PADDING, PARAM_KEY, EVENTS } from '../constants';
-import { getSelectedPadding } from '../helpers';
+import { getSelectedPadding, normalizeEntries } from '../helpers';
 import PaddingIcon from '../components/PaddingIcon';
 
 type Item = {
@@ -71,7 +71,7 @@ const getDisplayedItems = memoize(10)(
 );
 
 const PaddingSelector: FC<{ api: API }> = ({ api }) => {
-  const items = useParameter(PARAM_KEY, []);
+  const items = normalizeEntries(useParameter(PARAM_KEY, []));
   const selectedPadding = getSelectedPadding(items, api.getAddonState(PARAM_KEY));
 
   return items.length ? (
