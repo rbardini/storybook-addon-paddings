@@ -4,7 +4,7 @@ import { API, useParameter } from '@storybook/api';
 import { IconButton, WithTooltip, TooltipLinkList } from '@storybook/components';
 
 import { DEFAULT_PADDING, PARAM_KEY, EVENTS } from '../constants';
-import { getSelectedPadding, normalizeEntries } from '../helpers';
+import { getSelectedPadding, normalizeValues } from '../helpers';
 import PaddingIcon from '../components/PaddingIcon';
 
 type Item = {
@@ -71,16 +71,16 @@ const getDisplayedItems = memoize(10)(
 );
 
 const PaddingSelector: FC<{ api: API }> = ({ api }) => {
-  const items = normalizeEntries(useParameter(PARAM_KEY, []));
-  const selectedPadding = getSelectedPadding(items, api.getAddonState(PARAM_KEY));
+  const values = normalizeValues(useParameter(PARAM_KEY, []));
+  const selectedPadding = getSelectedPadding(values, api.getAddonState(PARAM_KEY));
 
-  return items.length ? (
+  return values.length ? (
     <WithTooltip
       placement="top"
       trigger="click"
       tooltip={({ onHide }) => (
         <TooltipLinkList
-          links={getDisplayedItems(items, selectedPadding, ({ selected }) => {
+          links={getDisplayedItems(values, selectedPadding, ({ selected }) => {
             api.setAddonState(PARAM_KEY, selected);
             api.emit(EVENTS.UPDATE, selected);
             onHide();

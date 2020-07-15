@@ -17,7 +17,7 @@ type Option = Value & {default?: boolean}
 
 type Options = Option[] | PaddingConfig | WrapperSettings['parameters'];
 
-export const normalizeEntries = (options: Options) => {
+export const normalizeValues = (options: Options) => {
   if (Array.isArray(options)) {
     logger.warn(
       'Addon Paddings has changed, please migrate to the new recommended configuration.',
@@ -42,9 +42,9 @@ export const isEnabled = (options: Options) => {
 };
 
 export const getSelectedPadding = (options: Options, currentValue: string): string => {
-  const entries = normalizeEntries(options);
+  const values = normalizeValues(options);
 
-  if (!isEnabled(entries)) {
+  if (!isEnabled(values)) {
     return DEFAULT_PADDING;
   }
 
@@ -52,9 +52,9 @@ export const getSelectedPadding = (options: Options, currentValue: string): stri
     return currentValue;
   }
 
-  if (entries.find(({ value }) => value === currentValue)) {
+  if (values.find(({ value }) => value === currentValue)) {
     return currentValue;
   }
 
-  return entries.find((option) => option.default)?.value ?? DEFAULT_PADDING;
+  return values.find((option) => option.default)?.value ?? DEFAULT_PADDING;
 };
