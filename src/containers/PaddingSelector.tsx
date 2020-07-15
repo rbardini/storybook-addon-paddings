@@ -4,7 +4,7 @@ import { API, useParameter } from '@storybook/api';
 import { IconButton, WithTooltip, TooltipLinkList } from '@storybook/components';
 
 import { DEFAULT_PADDING, PARAM_KEY, EVENTS } from '../constants';
-import { getSelectedPadding, normalizeValues } from '../helpers';
+import { getSelectedPadding, normalizeValues, isEnabled } from '../helpers';
 import PaddingIcon from '../components/PaddingIcon';
 
 type Item = {
@@ -58,23 +58,27 @@ const getDisplayedItems = memoize(10)(
       );
     }
 
-    if (list.length) {
-      availablePaddingSelectorItems.push(
-        ...list.map(({ name, value }) => (
-          createPaddingSelectorItem(null, name, value, true, change)
-        )),
-      );
-    }
+    availablePaddingSelectorItems.push(
+      ...list.map(({ name, value }) => (
+        createPaddingSelectorItem(null, name, value, true, change)
+      )),
+    );
 
     return availablePaddingSelectorItems;
   },
 );
 
 const PaddingSelector: FC<{ api: API }> = ({ api }) => {
-  const values = normalizeValues(useParameter(PARAM_KEY, []));
+  const options = useParameter(PARAM_KEY, null);
+
+  if (!isEnabled(options)) {
+    return null;
+  }
+
+  const values = normalizeValues(options);
   const selectedPadding = getSelectedPadding(values, api.getAddonState(PARAM_KEY));
 
-  return values.length ? (
+  return (
     <WithTooltip
       placement="top"
       trigger="click"
@@ -97,7 +101,7 @@ const PaddingSelector: FC<{ api: API }> = ({ api }) => {
         <PaddingIcon />
       </IconButton>
     </WithTooltip>
-  ) : null;
+  );
 };
 
 export default PaddingSelector;
