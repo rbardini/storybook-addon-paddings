@@ -34,9 +34,11 @@ export const normalizeEntries = (options: Options) => {
 };
 
 export const isEnabled = (options: Options) => {
-  const items = Array.isArray(options) ? options : Object.entries(options.values);
+  if (Array.isArray(options)) {
+    return options.length > 0;
+  }
 
-  return items.length > 0;
+  return !options?.disable || Object.entries(options.values).length > 0;
 };
 
 export const getSelectedPadding = (options: Options, currentValue: string): string => {
