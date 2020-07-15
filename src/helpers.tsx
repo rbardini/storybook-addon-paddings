@@ -1,4 +1,5 @@
 /* eslint-disable import/prefer-default-export */
+import { logger } from '@storybook/client-logger';
 import { WrapperSettings } from '@storybook/addons';
 import { DEFAULT_PADDING } from './constants';
 
@@ -16,13 +17,21 @@ type Option = Value & {default?: boolean}
 
 type Options = Option[] | PaddingConfig | WrapperSettings['parameters'];
 
-export const normalizeEntries = (options: Options) => (Array.isArray(options)
-  ? options
-  : Object.entries<Value>(options.values).map(([key, { name, value }]) => {
-    const isDefault = options.default === key;
+export const normalizeEntries = (options: Options) => {
+  if (Array.isArray(options)) {
+    logger.warn(
+      'Addon Paddings has changed, please migrate to the new recommended configuration.',
+    );
+  }
 
-    return { name, value, default: isDefault };
-  }));
+  return Array.isArray(options)
+    ? options
+    : Object.entries<Value>(options.values).map(([key, { name, value }]) => {
+      const isDefault = options.default === key;
+
+      return { name, value, default: isDefault };
+    });
+};
 
 export const isEnabled = (options: Options) => {
   const items = Array.isArray(options) ? options : Object.entries(options.values);
