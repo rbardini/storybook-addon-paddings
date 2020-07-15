@@ -4,9 +4,12 @@ import { withPaddings } from 'storybook-addon-paddings';
 addDecorator(withPaddings);
 
 addParameters({
-  paddings: [
-    { name: 'Small', value: '16px' },
-    { name: 'Medium', value: '32px', default: true },
-    { name: 'Large', value: '64px' },
-  ],
+  paddings: {
+    values: {
+      small: { name: 'Small', value: '16px' },
+      medium: { name: 'Medium', value: '32px' },
+      large: { name: 'Large', value: '64px' },
+    },
+    default: 'medium'
+  }
 });
