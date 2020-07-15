@@ -4,7 +4,7 @@ import {
 } from '@storybook/addons';
 
 import { DEFAULT_PADDING, EVENTS, PARAM_KEY } from './constants';
-import { getSelectedPadding, isEnabled } from './helpers';
+import { getSelectedPadding, isEnabled, normalizeValues } from './helpers';
 
 const state: {
   initialized: boolean;
@@ -33,7 +33,7 @@ const render = (settings: WrapperSettings, storyFn: () => ReturnType<StoryWrappe
   }
 
   const currentValue = isEnabled(options) ? state.padding : DEFAULT_PADDING;
-  setStyle(getSelectedPadding(options, currentValue));
+  setStyle(getSelectedPadding(normalizeValues(options), currentValue));
 
   return storyFn();
 };
