@@ -2,29 +2,30 @@
 import { WrapperSettings } from '@storybook/addons';
 import { DEFAULT_PADDING } from './constants';
 
-type Size = { name: string; value: string };
+type Value = { name: string; value: string };
 
-type Option = Size & {default?: boolean}
-
-type Sizes = { [key: string]: Size };
+type Values = { [key: string]: Value };
 
 type PaddingConfig = {
-  sizes: Sizes;
-  defaultPadding: string;
+  default: string;
+  disable?: boolean;
+  values: Values;
 }
+
+type Option = Value & {default?: boolean}
 
 type Options = Option[] | PaddingConfig | WrapperSettings['parameters'];
 
 export const normalizeEntries = (options: Options) => (Array.isArray(options)
   ? options
-  : Object.entries<Size>(options.sizes).map(([key, { name, value }]) => {
-    const isDefault = options.defaultPadding === key;
+  : Object.entries<Value>(options.values).map(([key, { name, value }]) => {
+    const isDefault = options.default === key;
 
     return { name, value, default: isDefault };
   }));
 
 export const isEnabled = (options: Options) => {
-  const items = Array.isArray(options) ? options : Object.entries(options.sizes);
+  const items = Array.isArray(options) ? options : Object.entries(options.values);
 
   return items.length > 0;
 };
