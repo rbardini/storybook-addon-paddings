@@ -17,7 +17,7 @@ type Option = Value & {default?: boolean}
 
 type Options = Option[] | PaddingConfig | WrapperSettings['parameters'];
 
-export const normalizeValues = (options: Options) => (Array.isArray(options)
+export const normalizeValues = (options: Options): Option[] => (Array.isArray(options)
   ? options
   : Object.entries<Value>(options.values).map(([key, { name, value }]) => {
     const isDefault = options.default === key;
@@ -25,10 +25,10 @@ export const normalizeValues = (options: Options) => (Array.isArray(options)
     return { name, value, default: isDefault };
   }));
 
-export const isEnabled = (options: Options) => {
+export const isEnabled = (options: Options): boolean => {
   if (Array.isArray(options)) {
     logger.warn(
-      'Storybook addon paddings has changed, please migrate to the new recommended configuration.',
+      'Using array parameter with Paddings addon is deprecated, and support will be dropped in a future major version. Please refer to the release notes for migration: https://github.com/rbardini/storybook-addon-paddings/releases/tag/v2.1.0',
     );
 
     return options.length > 0;
