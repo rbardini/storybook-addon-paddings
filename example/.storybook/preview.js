@@ -5,11 +5,11 @@ addDecorator(withPaddings);
 
 addParameters({
   paddings: {
-    values: {
-      small: { name: 'Small', value: '16px' },
-      medium: { name: 'Medium', value: '32px' },
-      large: { name: 'Large', value: '64px' },
-    },
-    default: 'medium'
+    values: [
+      { key: 'sm', name: 'Small', value: '16px' },
+      { key: 'md', name: 'Medium', value: '32px' },
+      { key: 'lg', name: 'Large', value: '64px' },
+    ],
+    default: 'md'
   }
 });

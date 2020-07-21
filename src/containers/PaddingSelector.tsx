@@ -4,7 +4,9 @@ import { API, useParameter } from '@storybook/api';
 import { IconButton, WithTooltip, TooltipLinkList } from '@storybook/components';
 
 import { DEFAULT_PADDING, PARAM_KEY, EVENTS } from '../constants';
-import { getSelectedPadding, normalizeValues, isEnabled } from '../helpers';
+import {
+  getSelectedPadding, normalizeValues, isEnabled, PaddingWithDefault,
+} from '../helpers';
 import PaddingIcon from '../components/PaddingIcon';
 
 type Item = {
@@ -13,12 +15,6 @@ type Item = {
   onClick: () => void;
   value: string;
   right?: ReactNode;
-}
-
-type Input = {
-  name: string;
-  value: string;
-  default?: boolean;
 }
 
 type GlobalState = {
@@ -46,7 +42,7 @@ const createPaddingSelectorItem = memoize(1000)(
 
 const getDisplayedItems = memoize(10)(
   (
-    list: Input[],
+    list: PaddingWithDefault[],
     selected: string,
     change: (arg: GlobalState) => void,
   ) => {
@@ -70,37 +66,37 @@ const getDisplayedItems = memoize(10)(
 
 const PaddingSelector: FC<{ api: API }> = ({ api }) => {
   const options = useParameter(PARAM_KEY, null);
-
-  if (!isEnabled(options)) {
-    return null;
-  }
-
   const values = normalizeValues(options);
-  const selectedPadding = getSelectedPadding(values, api.getAddonState(PARAM_KEY));
+  const selectedPadding = getSelectedPadding(
+    values,
+    api.getAddonState(PARAM_KEY),
+  );
 
   return (
-    <WithTooltip
-      placement="top"
-      trigger="click"
-      tooltip={({ onHide }) => (
-        <TooltipLinkList
-          links={getDisplayedItems(values, selectedPadding, ({ selected }) => {
-            api.setAddonState(PARAM_KEY, selected);
-            api.emit(EVENTS.UPDATE, selected);
-            onHide();
-          })}
-        />
-      )}
-      closeOnClick
-    >
-      <IconButton
-        key="padding"
-        active={selectedPadding !== DEFAULT_PADDING}
-        title="Change the paddings of the preview"
+    isEnabled(values) ? (
+      <WithTooltip
+        placement="top"
+        trigger="click"
+        tooltip={({ onHide }) => (
+          <TooltipLinkList
+            links={getDisplayedItems(values, selectedPadding, ({ selected }) => {
+              api.setAddonState(PARAM_KEY, selected);
+              api.emit(EVENTS.UPDATE, selected);
+              onHide();
+            })}
+          />
+        )}
+        closeOnClick
       >
-        <PaddingIcon />
-      </IconButton>
-    </WithTooltip>
+        <IconButton
+          key="padding"
+          active={selectedPadding !== DEFAULT_PADDING}
+          title="Change the paddings of the preview"
+        >
+          <PaddingIcon />
+        </IconButton>
+      </WithTooltip>
+    ) : null
   );
 };
 

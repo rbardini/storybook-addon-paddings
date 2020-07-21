@@ -3,8 +3,10 @@ import {
   addons, makeDecorator, WrapperSettings, StoryWrapper,
 } from '@storybook/addons';
 
-import { DEFAULT_PADDING, EVENTS, PARAM_KEY } from './constants';
-import { getSelectedPadding, isEnabled, normalizeValues } from './helpers';
+import {
+  DEFAULT_PADDING, EVENTS, PARAM_KEY,
+} from './constants';
+import { getSelectedPadding, normalizeValues, isEnabled } from './helpers';
 
 const state: {
   initialized: boolean;
@@ -26,14 +28,15 @@ const setPadding = (padding: string) => {
 const render = (settings: WrapperSettings, storyFn: () => ReturnType<StoryWrapper>) => {
   const { parameters: options = {} } = settings;
   const channel = addons.getChannel();
+  const values = normalizeValues(options);
 
   if (!state.initialized) {
     channel.on(EVENTS.UPDATE, setPadding);
     state.initialized = true;
   }
 
-  const currentValue = isEnabled(options) ? state.padding : DEFAULT_PADDING;
-  setStyle(getSelectedPadding(normalizeValues(options), currentValue));
+  const currentValue = isEnabled(values) ? state.padding : DEFAULT_PADDING;
+  setStyle(getSelectedPadding(values, currentValue));
 
   return storyFn();
 };
