@@ -5,12 +5,10 @@ import { DEFAULT_PADDING } from './constants';
 
 type Padding = { name: string; value: string };
 
-type PaddingWithKey = Padding & { key: string };
-
 type PaddingsParameter = {
   default?: string;
   disable?: boolean;
-  values: PaddingWithKey[];
+  values: Padding[];
 }
 
 export type PaddingWithDefault = Padding & Pick<PaddingsParameter, 'default'>;
@@ -28,9 +26,9 @@ export const normalizeValues = (options: Options): PaddingWithDefault[] => {
   }
 
   if (options && !options?.disable && options.values.length > 0) {
-    return options.values.map((item: PaddingWithKey) => {
-      const { name, value, key } = item;
-      const isDefault = options.default === key;
+    return options.values.map((item: Padding) => {
+      const { name, value } = item;
+      const isDefault = options.default === name;
 
       return { name, value, default: isDefault };
     });
