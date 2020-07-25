@@ -51,11 +51,14 @@ import { withPaddings } from 'storybook-addon-paddings';
 addDecorator(withPaddings);
 
 addParameters({
-  paddings: [
-    { name: 'Small', value: '16px' },
-    { name: 'Medium', value: '32px', default: true },
-    { name: 'Large', value: '64px' },
-  ],
+  paddings: {
+    values: [
+      { name: 'Small', value: '16px' },
+      { name: 'Medium', value: '32px' },
+      { name: 'Large', value: '64px' },
+    ],
+    default: 'Medium'
+  }
 });
 ```
 
@@ -67,42 +70,48 @@ To configure/override paddings for a single story or a set of stories, add the `
 export default {
   title: 'Stories',
   parameters: {
-    paddings: [
-      { name: 'Small', value: '16px' },
-      { name: 'Medium', value: '32px', default: true },
-      { name: 'Large', value: '64px' },
-    ],
+    paddings: {
+      values: [
+        { name: 'Small', value: '16px' },
+        { name: 'Medium', value: '32px', },
+        { name: 'Large', value: '64px' },
+      ],
+      default: 'Medium'
+    }
   },
 };
 
 export const myStory = () => '<h1>Hello World</h1>';
 myStory.story = {
   parameters: {
-    paddings: [
-      { name: 'Small', value: '16px' },
-      { name: 'Medium', value: '32px', default: true },
-      { name: 'Large', value: '64px' },
-    ],
+    paddings: {
+      values: [
+        { name: 'Small', value: '16px' },
+        { name: 'Medium', value: '32px' },
+        { name: 'Large', value: '64px' },
+      ],
+      default: 'Medium'
+    }
   },
 };
 ```
 
 ### Disabling the addon
 
-To disable paddings for a story, set the `paddings` parameter to `[]`, or use `{ disable: true }` to skip the addon:
+To disable paddings for a story, set the `paddings` parameter to `{ disable: true }` to skip the addon:
 
 ```js
 export default {
   title: 'Stories',
   parameters: {
-    paddings: [],
+    paddings: { disable: true },
   },
 };
 
 export const myStory = () => '<h1>Hello World</h1>';
 myStory.story = {
   parameters: {
-    paddings: { disabled: true },
+    paddings: { disable: true },
   },
 };
 ```
