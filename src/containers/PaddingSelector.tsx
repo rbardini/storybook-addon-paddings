@@ -2,7 +2,6 @@ import React, { FC, ReactNode } from 'react';
 import memoize from 'memoizerific';
 import { API, useParameter } from '@storybook/api';
 import { IconButton, WithTooltip, TooltipLinkList } from '@storybook/components';
-
 import { DEFAULT_PADDING, PARAM_KEY, EVENTS } from '../constants';
 import {
   getSelectedPadding, normalizeValues, isEnabled, PaddingWithDefault,
@@ -72,6 +71,8 @@ const PaddingSelector: FC<{ api: API }> = ({ api }) => {
     api.getAddonState(PARAM_KEY),
   );
 
+  api.emit(EVENTS.UPDATE, { values, selectedPadding });
+
   return (
     isEnabled(values) ? (
       <WithTooltip
@@ -81,7 +82,6 @@ const PaddingSelector: FC<{ api: API }> = ({ api }) => {
           <TooltipLinkList
             links={getDisplayedItems(values, selectedPadding, ({ selected }) => {
               api.setAddonState(PARAM_KEY, selected);
-              api.emit(EVENTS.UPDATE, selected);
               onHide();
             })}
           />
