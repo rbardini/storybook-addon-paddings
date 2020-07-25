@@ -15,6 +15,7 @@ const Card = styled.div({
 export default {
   title: 'Card',
   component: Card,
+  parameters: { paddings: { disable: true } },
 };
 
 export const Elevated = () => (
