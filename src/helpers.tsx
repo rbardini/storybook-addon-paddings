@@ -25,16 +25,16 @@ export const normalizeValues = (options: Options): PaddingWithDefault[] => {
     return options;
   }
 
-  if (options && !options?.disable && options.values.length > 0) {
-    return options.values.map((item: Padding) => {
-      const { name, value } = item;
-      const isDefault = options.default === name;
-
-      return { name, value, default: isDefault };
-    });
+  if (!options || options.disable || options.values.length === 0) {
+    return [];
   }
 
-  return [];
+  return options.values.map((item: Padding) => {
+    const { name, value } = item;
+    const isDefault = options.default === name;
+
+    return { name, value, default: isDefault };
+  });
 };
 
 export const getSelectedPadding = (values: PaddingWithDefault[], currentValue: string): string => {
