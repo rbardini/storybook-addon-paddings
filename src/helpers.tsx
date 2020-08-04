@@ -15,7 +15,7 @@ export type PaddingWithDefault = Padding & Pick<PaddingsParameter, 'default'>;
 
 type Options = Padding[] | PaddingsParameter | WrapperSettings['parameters'];
 
-export const isEnabled = (values: Padding[]): boolean => values.length > 0;
+export const isEnabled = (values: PaddingWithDefault[]): boolean => values.length > 0;
 
 export const normalizeValues = (options: Options): PaddingWithDefault[] => {
   if (Array.isArray(options)) {
