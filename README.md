@@ -103,9 +103,6 @@ To disable paddings for a story, set the `paddings` parameter to `{ disable: tru
 ```js
 export default {
   title: 'Stories',
-  parameters: {
-    paddings: { disable: true },
-  },
 };
 
 export const myStory = () => '<h1>Hello World</h1>';
