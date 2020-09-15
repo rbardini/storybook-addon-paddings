@@ -2,7 +2,7 @@ import { styled } from '@storybook/theming';
 
 type SvgProps = {
   inline?: boolean;
-}
+};
 
 export const Svg = styled.svg<SvgProps>(
   {

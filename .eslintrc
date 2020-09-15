@@ -19,17 +19,19 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": [
-    "react",
-    "react-hooks",
-    "@typescript-eslint"
-  ],
+  "plugins": ["react", "react-hooks", "@typescript-eslint"],
   "rules": {
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "import/extensions": ["error", "ignorePackages", { "tsx": "never" }],
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["example/**/*.js"]}],
-    "react/jsx-filename-extension": ["error", { "extensions": [".js", ".tsx"] }],
+    "import/no-extraneous-dependencies": [
+      "error",
+      { "devDependencies": ["example/**/*.js"] }
+    ],
+    "react/jsx-filename-extension": [
+      "error",
+      { "extensions": [".js", ".tsx"] }
+    ],
     "react/prop-types": "off",
     "react-hooks/exhaustive-deps": "warn",
     "react-hooks/rules-of-hooks": "error"
