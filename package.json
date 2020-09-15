@@ -33,6 +33,8 @@
     "build-example": "npm run build-storybook --prefix example",
     "preexample": "npm run build",
     "example": "npm run storybook --prefix example",
+    "format": "prettier --ignore-path .gitignore --write .",
+    "format-check": "prettier --ignore-path .gitignore --check .",
     "lint": "eslint --ignore-path .gitignore --ext .js,.tsx .",
     "type-check": "tsc --noEmit"
   },
