@@ -7,8 +7,9 @@ export default {
   component: Welcome,
 };
 
-export const ToStorybook = () => <Welcome showApp={linkTo('Button')} />;
+const Template = (args) => <Welcome {...args} />;
 
-ToStorybook.story = {
-  name: 'to Storybook',
+export const ToStorybook = Template.bind({});
+ToStorybook.args = {
+  showApp: linkTo('Button'),
 };
