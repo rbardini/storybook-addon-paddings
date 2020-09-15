@@ -21,8 +21,8 @@ within `.storybook/main.js`:
 
 ```js
 module.exports = {
-  addons: ['storybook-addon-paddings']
-}
+  addons: ['storybook-addon-paddings'],
+};
 ```
 
 within `.storybook/preview.js`:

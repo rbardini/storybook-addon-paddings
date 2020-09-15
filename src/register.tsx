@@ -9,9 +9,7 @@ addons.register(ADDON_ID, (api) => {
     title: 'Paddings',
     type: types.TOOL,
     match: ({ viewMode }) => viewMode === 'story',
-    render: () => (
-      <PaddingSelector api={api} />
-    ),
+    render: () => <PaddingSelector api={api} />,
     paramKey: PARAM_KEY,
   });
 });

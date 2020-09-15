@@ -6,13 +6,17 @@ type Option = {
   name: string;
   value: string;
   default?: boolean;
-}
+};
 
 type Options = Option[] | WrapperSettings['parameters'];
 
-export const isEnabled = (options: Options): options is Option[] => options.length > 0;
+export const isEnabled = (options: Options): options is Option[] =>
+  options.length > 0;
 
-export const getSelectedPadding = (options: Options, currentValue: string): string => {
+export const getSelectedPadding = (
+  options: Options,
+  currentValue: string,
+): string => {
   if (!isEnabled(options)) {
     return DEFAULT_PADDING;
   }

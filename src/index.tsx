@@ -1,6 +1,9 @@
 /* eslint-disable import/prefer-default-export */
 import {
-  addons, makeDecorator, WrapperSettings, StoryWrapper,
+  addons,
+  makeDecorator,
+  WrapperSettings,
+  StoryWrapper,
 } from '@storybook/addons';
 
 import { DEFAULT_PADDING, EVENTS, PARAM_KEY } from './constants';
@@ -23,7 +26,10 @@ const setPadding = (padding: string) => {
   setStyle(padding);
 };
 
-const render = (settings: WrapperSettings, storyFn: () => ReturnType<StoryWrapper>) => {
+const render = (
+  settings: WrapperSettings,
+  storyFn: () => ReturnType<StoryWrapper>,
+) => {
   const { parameters: options = {} } = settings;
   const channel = addons.getChannel();
 
@@ -38,9 +44,8 @@ const render = (settings: WrapperSettings, storyFn: () => ReturnType<StoryWrappe
   return storyFn();
 };
 
-const wrapper: StoryWrapper = (getStory, context, settings) => (
-  render(settings, () => getStory(context))
-);
+const wrapper: StoryWrapper = (getStory, context, settings) =>
+  render(settings, () => getStory(context));
 
 export const withPaddings = makeDecorator({
   name: 'withPaddings',
