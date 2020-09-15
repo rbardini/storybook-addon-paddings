@@ -18,9 +18,10 @@ export default {
   component: Card,
 };
 
-export const Elevated = () => (
-  <Card>
-    I’m a big Card flying high. You may never know how far I cast shadows unless
-    you add some paddings around.
-  </Card>
-);
+const Template = (args) => <Card {...args} />;
+
+export const Elevated = Template.bind({});
+Elevated.args = {
+  children:
+    'I’m a big Card flying high. You may never know how far I cast shadows unless you add some paddings around.',
+};

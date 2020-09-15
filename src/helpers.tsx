@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { WrapperSettings } from '@storybook/addons';
 import { DEFAULT_PADDING } from './constants';
 

@@ -17,7 +17,7 @@ A [Storybook](https://storybook.js.org) addon to add different paddings to your 
 npm install --save-dev storybook-addon-paddings
 ```
 
-within `.storybook/main.js`:
+within [`.storybook/main.js`](https://storybook.js.org/docs/react/configure/overview#configure-your-storybook-project):
 
 ```js
 module.exports = {
@@ -25,84 +25,44 @@ module.exports = {
 };
 ```
 
-within `.storybook/preview.js`:
-
-```js
-import { addDecorator } from '@storybook/react';
-import { withPaddings } from 'storybook-addon-paddings';
-
-addDecorator(withPaddings);
-```
-
 See [`example`](example) for a minimal working setup.
 
 ## Configuration
 
-The addon can be configured globally and per story with the `paddings` parameter.
+The paddings toolbar comes with small, medium and large options by default, but you can configure your own set of paddings via the `paddings` [parameter](https://storybook.js.org/docs/react/writing-stories/parameters).
 
-### Global configuration
-
-To add paddings to all stories, call `addParameters` in `.storybook/preview.js`:
+To configure for all stories, set the `paddings` parameter in [`.storybook/preview.js`](https://storybook.js.org/docs/react/configure/overview#configure-story-rendering):
 
 ```js
-import { addParameters } from '@storybook/react';
-import { withPaddings } from 'storybook-addon-paddings';
-
-addDecorator(withPaddings);
-
-addParameters({
+export const parameters = {
   paddings: [
     { name: 'Small', value: '16px' },
     { name: 'Medium', value: '32px', default: true },
     { name: 'Large', value: '64px' },
   ],
-});
+};
 ```
 
-### Per-story configuration
-
-To configure/override paddings for a single story or a set of stories, add the `paddings` parameter:
+You can also configure on per-story or per-component basis using [parameter inheritance](https://storybook.js.org/docs/react/writing-stories/parameters#component-parameters):
 
 ```js
+// Button.stories.js
+
+// Set padding options for all Button stories
 export default {
-  title: 'Stories',
+  title: 'Button',
   parameters: {
     paddings: [
       { name: 'Small', value: '16px' },
-      { name: 'Medium', value: '32px', default: true },
-      { name: 'Large', value: '64px' },
+      { name: 'Medium', value: '32px' },
+      { name: 'Large', value: '64px', default: true },
     ],
   },
 };
 
-export const myStory = () => '<h1>Hello World</h1>';
-myStory.story = {
-  parameters: {
-    paddings: [
-      { name: 'Small', value: '16px' },
-      { name: 'Medium', value: '32px', default: true },
-      { name: 'Large', value: '64px' },
-    ],
-  },
-};
-```
-
-### Disabling the addon
-
-To disable paddings for a story, set the `paddings` parameter to `[]`, or use `{ disable: true }` to skip the addon:
-
-```js
-export default {
-  title: 'Stories',
-  parameters: {
-    paddings: [],
-  },
-};
-
-export const myStory = () => '<h1>Hello World</h1>';
-myStory.story = {
-  parameters: {
-    paddings: { disabled: true },
-  },
+// Disable addon in Button/Large story only
+export const Large = Template.bind({});
+Large.parameters = {
+  paddings: [],
 };
 ```
