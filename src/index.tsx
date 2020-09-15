@@ -50,7 +50,6 @@ const wrapper: StoryWrapper = (getStory, context, settings) =>
 export const withPaddings = makeDecorator({
   name: 'withPaddings',
   parameterName: PARAM_KEY,
-  allowDeprecatedUsage: true,
   skipIfNoParametersOrOptions: true,
   wrapper,
 });
