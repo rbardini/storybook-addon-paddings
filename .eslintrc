@@ -25,6 +25,7 @@
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-use-before-define": "error",
     "import/extensions": ["error", "ignorePackages", { "tsx": "never" }],
+    "import/prefer-default-export": "off",
     "no-use-before-define": "off",
     "react/jsx-filename-extension": [
       "error",
