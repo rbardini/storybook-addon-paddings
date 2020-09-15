@@ -7,12 +7,10 @@
   "extends": [
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
-    "airbnb"
+    "airbnb",
+    "prettier",
+    "prettier/react"
   ],
-  "globals": {
-    "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
-  },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
@@ -28,6 +26,7 @@
   ],
   "rules": {
     "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "import/extensions": ["error", "ignorePackages", { "tsx": "never" }],
     "import/no-extraneous-dependencies": ["error", {"devDependencies": ["example/**/*.js"]}],
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".tsx"] }],
