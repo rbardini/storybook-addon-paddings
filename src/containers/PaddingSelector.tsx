@@ -1,10 +1,18 @@
 import React, { FC, ReactNode } from 'react';
 import memoize from 'memoizerific';
 import { API, useParameter } from '@storybook/api';
-import { IconButton, WithTooltip, TooltipLinkList } from '@storybook/components';
+import {
+  IconButton,
+  WithTooltip,
+  TooltipLinkList,
+} from '@storybook/components';
+
 import { DEFAULT_PADDING, PARAM_KEY, EVENTS } from '../constants';
 import {
-  getSelectedPadding, normalizeValues, isEnabled, PaddingWithDefault,
+  getSelectedPadding,
+  normalizeValues,
+  isEnabled,
+  PaddingWithDefault,
 } from '../helpers';
 import PaddingIcon from '../components/PaddingIcon';
 
@@ -14,12 +22,12 @@ type Item = {
   onClick: () => void;
   value: string;
   right?: ReactNode;
-}
+};
 
 type GlobalState = {
   name?: string;
   selected?: string;
-}
+};
 
 const createPaddingSelectorItem = memoize(1000)(
   (
@@ -49,14 +57,20 @@ const getDisplayedItems = memoize(10)(
 
     if (selected !== DEFAULT_PADDING) {
       availablePaddingSelectorItems.push(
-        createPaddingSelectorItem('reset', 'Clear paddings', DEFAULT_PADDING, null, change),
+        createPaddingSelectorItem(
+          'reset',
+          'Clear paddings',
+          DEFAULT_PADDING,
+          null,
+          change,
+        ),
       );
     }
 
     availablePaddingSelectorItems.push(
-      ...list.map(({ name, value }) => (
-        createPaddingSelectorItem(null, name, value, true, change)
-      )),
+      ...list.map(({ name, value }) =>
+        createPaddingSelectorItem(null, name, value, true, change),
+      ),
     );
 
     return availablePaddingSelectorItems;
@@ -73,31 +87,29 @@ const PaddingSelector: FC<{ api: API }> = ({ api }) => {
 
   api.emit(EVENTS.UPDATE, { values, selectedPadding });
 
-  return (
-    isEnabled(values) ? (
-      <WithTooltip
-        placement="top"
-        trigger="click"
-        tooltip={({ onHide }) => (
-          <TooltipLinkList
-            links={getDisplayedItems(values, selectedPadding, ({ selected }) => {
-              api.setAddonState(PARAM_KEY, selected);
-              onHide();
-            })}
-          />
-        )}
-        closeOnClick
+  return isEnabled(values) ? (
+    <WithTooltip
+      placement="top"
+      trigger="click"
+      tooltip={({ onHide }) => (
+        <TooltipLinkList
+          links={getDisplayedItems(values, selectedPadding, ({ selected }) => {
+            api.setAddonState(PARAM_KEY, selected);
+            onHide();
+          })}
+        />
+      )}
+      closeOnClick
+    >
+      <IconButton
+        key="padding"
+        active={selectedPadding !== DEFAULT_PADDING}
+        title="Change the paddings of the preview"
       >
-        <IconButton
-          key="padding"
-          active={selectedPadding !== DEFAULT_PADDING}
-          title="Change the paddings of the preview"
-        >
-          <PaddingIcon />
-        </IconButton>
-      </WithTooltip>
-    ) : null
-  );
+        <PaddingIcon />
+      </IconButton>
+    </WithTooltip>
+  ) : null;
 };
 
 export default PaddingSelector;

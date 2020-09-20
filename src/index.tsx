@@ -1,8 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { addons, makeDecorator, StoryWrapper } from '@storybook/addons';
-import {
-  DEFAULT_PADDING, EVENTS, PARAM_KEY,
-} from './constants';
+import { DEFAULT_PADDING, EVENTS, PARAM_KEY } from './constants';
 import { getSelectedPadding } from './helpers';
 
 const state: {
@@ -30,14 +28,12 @@ const render = (storyFn: () => ReturnType<StoryWrapper>) => {
   return storyFn();
 };
 
-const wrapper: StoryWrapper = (getStory, context) => (
-  render(() => getStory(context))
-);
+const wrapper: StoryWrapper = (getStory, context) =>
+  render(() => getStory(context));
 
 export const withPaddings = makeDecorator({
   name: 'withPaddings',
   parameterName: PARAM_KEY,
-  allowDeprecatedUsage: true,
   skipIfNoParametersOrOptions: true,
   wrapper,
 });

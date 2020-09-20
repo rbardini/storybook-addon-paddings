@@ -18,13 +18,16 @@ jobs:
         run: npm ci
 
       - name: Install example
-        run: npm ci --prefix example
+        run: npm i --prefix example
 
       - name: Build
         run: npm run build
 
       - name: Lint
         run: npm run lint
+
+      - name: Format-check
+        run: npm run format-check
 
       - name: Type-check
         run: npm run type-check
