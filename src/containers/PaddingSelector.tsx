@@ -1,13 +1,13 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC, ReactNode, useCallback, useMemo } from 'react';
 import memoize from 'memoizerific';
-import { API, useParameter } from '@storybook/api';
+import { useParameter, useGlobals } from '@storybook/api';
 import {
   IconButton,
   WithTooltip,
   TooltipLinkList,
 } from '@storybook/components';
 
-import { DEFAULT_PADDING, PARAM_KEY, EVENTS } from '../constants';
+import { DEFAULT_PADDING, PARAM_KEY } from '../constants';
 import {
   getSelectedPadding,
   normalizeValues,
@@ -77,15 +77,22 @@ const getDisplayedItems = memoize(10)(
   },
 );
 
-const PaddingSelector: FC<{ api: API }> = ({ api }) => {
+const PaddingSelector: FC = () => {
+  const [globals, updateGlobals] = useGlobals();
   const options = useParameter(PARAM_KEY, null);
   const values = normalizeValues(options);
-  const selectedPadding = getSelectedPadding(
-    values,
-    api.getAddonState(PARAM_KEY),
+
+  const selectedPadding = useMemo(
+    () => getSelectedPadding(values, globals[PARAM_KEY]?.value),
+    [globals, values],
   );
 
-  api.emit(EVENTS.UPDATE, { values, selectedPadding });
+  const onPaddingChange = useCallback(
+    (value: string) => {
+      updateGlobals({ [PARAM_KEY]: { ...globals[PARAM_KEY], value } });
+    },
+    [globals, updateGlobals],
+  );
 
   return isEnabled(values) ? (
     <WithTooltip
@@ -94,7 +101,7 @@ const PaddingSelector: FC<{ api: API }> = ({ api }) => {
       tooltip={({ onHide }) => (
         <TooltipLinkList
           links={getDisplayedItems(values, selectedPadding, ({ selected }) => {
-            api.setAddonState(PARAM_KEY, selected);
+            onPaddingChange(selected);
             onHide();
           })}
         />

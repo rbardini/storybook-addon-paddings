@@ -1,39 +1,29 @@
 /* eslint-disable import/prefer-default-export */
-import { addons, makeDecorator, StoryWrapper } from '@storybook/addons';
-import { DEFAULT_PADDING, EVENTS, PARAM_KEY } from './constants';
-import { getSelectedPadding } from './helpers';
+import { StoryWrapper, useMemo } from '@storybook/addons';
 
-const state: {
-  initialized: boolean;
-  padding?: string;
-} = {
-  initialized: false,
-};
+import { DEFAULT_PADDING, PARAM_KEY } from './constants';
+import { normalizeValues, getSelectedPadding } from './helpers';
 
 const setStyle = (padding = DEFAULT_PADDING) => {
   document.body.style.padding = padding;
   document.body.style.transition = 'padding .3s';
 };
 
-const render = (storyFn: () => ReturnType<StoryWrapper>) => {
-  const channel = addons.getChannel();
+export const withPaddings: StoryWrapper = (getStory, context) => {
+  const { globals, parameters } = context;
+  const globalsSelectedPadding = globals[PARAM_KEY]?.value;
+  const paddingsConfig = parameters[PARAM_KEY];
 
-  if (!state.initialized) {
-    channel.on(EVENTS.UPDATE, ({ values, selectedPadding }) => {
-      setStyle(getSelectedPadding(values, selectedPadding));
-    });
-    state.initialized = true;
-  }
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useMemo(() => {
+    const selectedPadding = getSelectedPadding(
+      normalizeValues(paddingsConfig),
+      globalsSelectedPadding,
+    );
+    setStyle(selectedPadding);
+  }, [paddingsConfig, globalsSelectedPadding]);
 
-  return storyFn();
+  return getStory(context);
 };
 
-const wrapper: StoryWrapper = (getStory, context) =>
-  render(() => getStory(context));
-
-export const withPaddings = makeDecorator({
-  name: 'withPaddings',
-  parameterName: PARAM_KEY,
-  skipIfNoParametersOrOptions: true,
-  wrapper,
-});
+export default withPaddings;

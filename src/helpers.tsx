@@ -5,17 +5,18 @@ import { DEFAULT_PADDING } from './constants';
 
 type Padding = { name: string; value: string };
 
-type PaddingsParameter = {
-  default?: string;
+export type PaddingsParameter = {
+  default?: boolean;
   disable?: boolean;
   values: Padding[];
-}
+};
 
 export type PaddingWithDefault = Padding & Pick<PaddingsParameter, 'default'>;
 
 type Options = Padding[] | PaddingsParameter | WrapperSettings['parameters'];
 
-export const isEnabled = (values: PaddingWithDefault[]): boolean => values.length > 0;
+export const isEnabled = (values: PaddingWithDefault[]): boolean =>
+  values.length > 0;
 
 export const normalizeValues = (options: Options): PaddingWithDefault[] => {
   if (Array.isArray(options)) {
@@ -25,7 +26,7 @@ export const normalizeValues = (options: Options): PaddingWithDefault[] => {
     return options;
   }
 
-  if (!options || options.disable || options.values.length === 0) {
+  if (!options || options.disable || !options.values?.length) {
     return [];
   }
 
@@ -37,7 +38,10 @@ export const normalizeValues = (options: Options): PaddingWithDefault[] => {
   });
 };
 
-export const getSelectedPadding = (values: PaddingWithDefault[], currentValue: string): string => {
+export const getSelectedPadding = (
+  values: PaddingWithDefault[],
+  currentValue: string,
+): string => {
   if (currentValue === DEFAULT_PADDING) {
     return currentValue;
   }
