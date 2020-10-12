@@ -1,6 +1,4 @@
-type PaddingsOptions = {
-  addDecorator?: boolean;
-};
+import { PaddingsOptions } from '../types';
 
 export function managerEntries(entry: unknown[] = []) {
   return [...entry, require.resolve('../register')];

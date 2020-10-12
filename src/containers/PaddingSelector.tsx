@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useCallback, useMemo } from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
 import memoize from 'memoizerific';
 import { useParameter, useGlobals } from '@storybook/api';
 import {
@@ -8,26 +8,9 @@ import {
 } from '@storybook/components';
 
 import { DEFAULT_PADDING, PARAM_KEY } from '../constants';
-import {
-  getSelectedPadding,
-  normalizeValues,
-  isEnabled,
-  PaddingWithDefault,
-} from '../helpers';
+import { getSelectedPadding, normalizeValues, isEnabled } from '../helpers';
 import PaddingIcon from '../components/PaddingIcon';
-
-type Item = {
-  id: string;
-  title: string;
-  onClick: () => void;
-  value: string;
-  right?: ReactNode;
-};
-
-type GlobalState = {
-  name?: string;
-  selected?: string;
-};
+import { PaddingWithDefault, Item, GlobalState } from '../types';
 
 const createPaddingSelectorItem = memoize(1000)(
   (

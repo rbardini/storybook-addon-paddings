@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { StoryWrapper, useMemo } from '@storybook/addons';
 
 import { DEFAULT_PADDING, PARAM_KEY } from './constants';
