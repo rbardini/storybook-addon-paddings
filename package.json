@@ -44,7 +44,6 @@
     "@storybook/api": "^6.0.26",
     "@storybook/client-logger": "^6.0.26",
     "@storybook/components": "^6.0.26",
-    "@storybook/core-events": "^6.0.26",
     "@storybook/theming": "^6.0.26",
     "core-js": "^3.6.5",
     "memoizerific": "^1.11.3",
