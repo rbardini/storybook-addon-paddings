@@ -1,26 +1,20 @@
 /* eslint-disable import/prefer-default-export */
-import { logger } from '@storybook/client-logger';
 import { DEFAULT_PADDING } from './constants';
-import { PaddingWithDefault, Options, Padding } from './types';
+import { PaddingWithDefault, PaddingsParameter, Padding } from './types';
 
 export const isEnabled = (values: PaddingWithDefault[]): boolean =>
   values.length > 0;
 
-export const normalizeValues = (options: Options): PaddingWithDefault[] => {
-  if (Array.isArray(options)) {
-    logger.warn(
-      'Using array parameter with Paddings addon is deprecated, and support will be dropped in a future major version. Please refer to the release notes for migration: https://github.com/rbardini/storybook-addon-paddings/releases/tag/v3.1.0',
-    );
-    return options;
-  }
-
-  if (!options || options.disable || !options.values?.length) {
+export const normalizeValues = (
+  parameters: PaddingsParameter,
+): PaddingWithDefault[] => {
+  if (!parameters || parameters.disable || !parameters.values?.length) {
     return [];
   }
 
-  return options.values.map((item: Padding) => {
+  return parameters.values.map((item: Padding) => {
     const { name, value } = item;
-    const isDefault = options.default === name;
+    const isDefault = parameters.default === name;
 
     return { name, value, default: isDefault };
   });

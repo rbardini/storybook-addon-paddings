@@ -1,20 +1,14 @@
 import { ReactNode } from 'react';
-import { WrapperSettings } from '@storybook/addons';
 
 export type Padding = { name: string; value: string };
 
 export type PaddingsParameter = {
-  default?: boolean;
+  default?: string;
   disable?: boolean;
   values: Padding[];
 };
 
-export type PaddingWithDefault = Padding & Pick<PaddingsParameter, 'default'>;
-
-export type Options =
-  | Padding[]
-  | PaddingsParameter
-  | WrapperSettings['parameters'];
+export type PaddingWithDefault = Padding & { default?: boolean };
 
 export type Item = {
   id: string;
