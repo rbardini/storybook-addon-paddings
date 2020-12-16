@@ -16,6 +16,7 @@ const state: {
 };
 
 const setStyle = (padding = DEFAULT_PADDING) => {
+  document.body.style.margin = '0';
   document.body.style.padding = padding;
   document.body.style.transition = 'padding .3s';
 };
