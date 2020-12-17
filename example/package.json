@@ -6,16 +6,16 @@
     "storybook": "start-storybook -p 6006"
   },
   "dependencies": {
-    "react": "^17.0.1"
+    "react": "^17.0.0"
   },
   "devDependencies": {
-    "@babel/core": "7.11.6",
-    "@storybook/addon-essentials": "6.1.10",
-    "@storybook/addon-links": "6.1.10",
-    "@storybook/addons": "6.1.10",
-    "@storybook/react": "6.1.10",
-    "@storybook/theming": "6.1.10",
-    "babel-loader": "8.1.0",
+    "@babel/core": "^7.0.0",
+    "@storybook/addon-essentials": "^6.0.0",
+    "@storybook/addon-links": "^6.0.0",
+    "@storybook/addons": "^6.0.0",
+    "@storybook/react": "^6.0.0",
+    "@storybook/theming": "^6.0.0",
+    "babel-loader": "^8.0.0",
     "storybook-addon-paddings": "file:../"
   }
 }
