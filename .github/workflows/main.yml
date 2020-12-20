@@ -1,9 +1,15 @@
 name: Main
-on: push
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
-  test-build-and-release:
-    name: Test, build and release
+  test:
+    name: Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,6 +38,12 @@ jobs:
       - name: Type-check
         run: npm run type-check
 
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/master'
+    steps:
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
