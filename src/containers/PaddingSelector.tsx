@@ -58,7 +58,7 @@ const getDisplayedItems = memoize(10)(
           'reset',
           'Clear paddings',
           DEFAULT_PADDING,
-          null,
+          false,
           change,
         ),
       );
