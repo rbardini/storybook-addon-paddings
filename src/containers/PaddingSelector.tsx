@@ -16,6 +16,7 @@ type Item = {
   title: string;
   onClick: () => void;
   value: string;
+  active: boolean;
   right?: ReactNode;
 };
 
@@ -36,6 +37,7 @@ const createPaddingSelectorItem = memoize(1000)(
     name: string,
     value: string,
     hasValue: boolean,
+    active: boolean,
     change: (arg: { selected: string; name: string }) => void,
   ): Item => ({
     id: id || name,
@@ -44,6 +46,7 @@ const createPaddingSelectorItem = memoize(1000)(
       change({ selected: value, name });
     },
     value,
+    active,
     right: hasValue ? value : undefined,
   }),
 );
@@ -59,6 +62,7 @@ const getDisplayedItems = memoize(10)(
           'Clear paddings',
           DEFAULT_PADDING,
           false,
+          false,
           change,
         ),
       );
@@ -67,7 +71,14 @@ const getDisplayedItems = memoize(10)(
     if (list.length) {
       availablePaddingSelectorItems.push(
         ...list.map(({ name, value }) =>
-          createPaddingSelectorItem(null, name, value, true, change),
+          createPaddingSelectorItem(
+            null,
+            name,
+            value,
+            true,
+            value === selected,
+            change,
+          ),
         ),
       );
     }
