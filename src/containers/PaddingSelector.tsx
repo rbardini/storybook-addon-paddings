@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import React, { ComponentProps, FC } from 'react';
 import memoize from 'memoizerific';
 import { API, useParameter } from '@storybook/api';
 import {
@@ -11,14 +11,7 @@ import { DEFAULT_PADDING, PARAM_KEY, EVENTS } from '../constants';
 import { getSelectedPadding } from '../helpers';
 import PaddingIcon from '../components/PaddingIcon';
 
-type Item = {
-  id: string;
-  title: string;
-  onClick: () => void;
-  value: string;
-  active: boolean;
-  right?: ReactNode;
-};
+type Item = ComponentProps<typeof TooltipLinkList>['links'][0];
 
 type Input = {
   name: string;
@@ -42,10 +35,7 @@ const createPaddingSelectorItem = memoize(1000)(
   ): Item => ({
     id: id || name,
     title: name,
-    onClick: () => {
-      change({ selected: value, name });
-    },
-    value,
+    onClick: () => change({ selected: value, name }),
     active,
     right: hasValue ? value : undefined,
   }),
