@@ -18,14 +18,13 @@ const createPaddingSelectorItem = memoize(1000)(
     name: string,
     value: string,
     hasValue: boolean,
+    active: boolean,
     change: (arg: { selected: string; name: string }) => void,
   ): Item => ({
     id: id || name,
     title: name,
-    onClick: () => {
-      change({ selected: value, name });
-    },
-    value,
+    onClick: () => change({ selected: value, name }),
+    active,
     right: hasValue ? value : undefined,
   }),
 );
@@ -44,7 +43,8 @@ const getDisplayedItems = memoize(10)(
           'reset',
           'Clear paddings',
           DEFAULT_PADDING,
-          null,
+          false,
+          false,
           change,
         ),
       );
@@ -52,7 +52,14 @@ const getDisplayedItems = memoize(10)(
 
     availablePaddingSelectorItems.push(
       ...list.map(({ name, value }) =>
-        createPaddingSelectorItem(null, name, value, true, change),
+        createPaddingSelectorItem(
+          null,
+          name,
+          value,
+          true,
+          value === selected,
+          change,
+        ),
       ),
     );
 

@@ -1,4 +1,5 @@
-import { ReactNode } from 'react';
+import { TooltipLinkList } from '@storybook/components';
+import { ComponentProps } from 'react';
 
 export type Padding = { name: string; value: string };
 
@@ -10,13 +11,7 @@ export type PaddingsParameter = {
 
 export type PaddingWithDefault = Padding & { default?: boolean };
 
-export type Item = {
-  id: string;
-  title: string;
-  onClick: () => void;
-  value: string;
-  right?: ReactNode;
-};
+export type Item = ComponentProps<typeof TooltipLinkList>['links'][0];
 
 export type GlobalState = {
   name?: string;
