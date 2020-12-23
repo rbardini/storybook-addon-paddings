@@ -5,6 +5,5 @@ export const parameters = {
       { name: 'Medium', value: '32px' },
       { name: 'Large', value: '64px' },
     ],
-    default: 'Large',
   },
 };

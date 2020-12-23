@@ -16,7 +16,6 @@ const Card = styled.div({
 export default {
   title: 'Card',
   component: Card,
-  parameters: { paddings: { disable: true } },
 };
 
 const Template = (args) => <Card {...args} />;
