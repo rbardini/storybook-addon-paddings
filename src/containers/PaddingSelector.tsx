@@ -1,28 +1,16 @@
-import React, { ComponentProps, FC } from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
 import memoize from 'memoizerific';
-import { API, useParameter } from '@storybook/api';
+import { useParameter, useGlobals } from '@storybook/api';
 import {
   IconButton,
   WithTooltip,
   TooltipLinkList,
 } from '@storybook/components';
 
-import { DEFAULT_PADDING, PARAM_KEY, EVENTS } from '../constants';
-import { getSelectedPadding } from '../helpers';
+import { DEFAULT_PADDING, PARAM_KEY } from '../constants';
+import { getSelectedPadding, normalizeValues, isEnabled } from '../helpers';
 import PaddingIcon from '../components/PaddingIcon';
-
-type Item = ComponentProps<typeof TooltipLinkList>['links'][0];
-
-type Input = {
-  name: string;
-  value: string;
-  default?: boolean;
-};
-
-type GlobalState = {
-  name?: string;
-  selected?: string;
-};
+import { PaddingWithDefault, Item, GlobalState } from '../types';
 
 const createPaddingSelectorItem = memoize(1000)(
   (
@@ -42,7 +30,11 @@ const createPaddingSelectorItem = memoize(1000)(
 );
 
 const getDisplayedItems = memoize(10)(
-  (list: Input[], selected: string, change: (arg: GlobalState) => void) => {
+  (
+    list: PaddingWithDefault[],
+    selected: string,
+    change: (arg: GlobalState) => void,
+  ) => {
     const availablePaddingSelectorItems: Item[] = [];
 
     if (selected !== DEFAULT_PADDING) {
@@ -58,41 +50,48 @@ const getDisplayedItems = memoize(10)(
       );
     }
 
-    if (list.length) {
-      availablePaddingSelectorItems.push(
-        ...list.map(({ name, value }) =>
-          createPaddingSelectorItem(
-            null,
-            name,
-            value,
-            true,
-            value === selected,
-            change,
-          ),
+    availablePaddingSelectorItems.push(
+      ...list.map(({ name, value }) =>
+        createPaddingSelectorItem(
+          null,
+          name,
+          value,
+          true,
+          value === selected,
+          change,
         ),
-      );
-    }
+      ),
+    );
 
     return availablePaddingSelectorItems;
   },
 );
 
-const PaddingSelector: FC<{ api: API }> = ({ api }) => {
-  const items = useParameter(PARAM_KEY, []);
-  const selectedPadding = getSelectedPadding(
-    items,
-    api.getAddonState(PARAM_KEY),
+const PaddingSelector: FC = () => {
+  const [globals, updateGlobals] = useGlobals();
+  const options = useParameter(PARAM_KEY, null);
+  const values = normalizeValues(options);
+
+  const selectedPadding = useMemo(
+    () => getSelectedPadding(values, globals[PARAM_KEY]?.value),
+    [globals, values],
   );
 
-  return items.length ? (
+  const onPaddingChange = useCallback(
+    (value: string) => {
+      updateGlobals({ [PARAM_KEY]: { ...globals[PARAM_KEY], value } });
+    },
+    [globals, updateGlobals],
+  );
+
+  return isEnabled(values) ? (
     <WithTooltip
       placement="top"
       trigger="click"
       tooltip={({ onHide }) => (
         <TooltipLinkList
-          links={getDisplayedItems(items, selectedPadding, ({ selected }) => {
-            api.setAddonState(PARAM_KEY, selected);
-            api.emit(EVENTS.UPDATE, selected);
+          links={getDisplayedItems(values, selectedPadding, ({ selected }) => {
+            onPaddingChange(selected);
             onHide();
           })}
         />

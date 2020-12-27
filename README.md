@@ -35,11 +35,14 @@ To configure for all stories, set the `paddings` parameter in [`.storybook/previ
 
 ```js
 export const parameters = {
-  paddings: [
-    { name: 'Small', value: '16px' },
-    { name: 'Medium', value: '32px', default: true },
-    { name: 'Large', value: '64px' },
-  ],
+  paddings: {
+    values: [
+      { name: 'Small', value: '16px' },
+      { name: 'Medium', value: '32px' },
+      { name: 'Large', value: '64px' },
+    ],
+    default: 'Medium',
+  },
 };
 ```
 
@@ -52,17 +55,20 @@ You can also configure on per-story or per-component basis using [parameter inhe
 export default {
   title: 'Button',
   parameters: {
-    paddings: [
-      { name: 'Small', value: '16px' },
-      { name: 'Medium', value: '32px' },
-      { name: 'Large', value: '64px', default: true },
-    ],
+    paddings: {
+      values: [
+        { name: 'Small', value: '16px' },
+        { name: 'Medium', value: '32px' },
+        { name: 'Large', value: '64px' },
+      ],
+      default: 'Large',
+    },
   },
 };
 
 // Disable addon in Button/Large story only
 export const Large = Template.bind({});
 Large.parameters = {
-  paddings: [],
+  paddings: { disable: true },
 };
 ```

@@ -1,3 +1,3 @@
-import { withPaddings } from '..';
+import withPaddings from '..';
 
 export const decorators = [withPaddings];
