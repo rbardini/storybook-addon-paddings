@@ -2,8 +2,8 @@
   "name": "storybook-addon-paddings-example",
   "version": "0.0.0-development",
   "scripts": {
-    "build-storybook": "build-storybook",
-    "storybook": "start-storybook -p 6006"
+    "build-storybook": "build-storybook -s public",
+    "storybook": "start-storybook -s public -p 6006"
   },
   "dependencies": {
     "react": "^17.0.0",

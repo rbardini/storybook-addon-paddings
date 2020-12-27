@@ -7,7 +7,7 @@
 
 A [Storybook](https://storybook.js.org) addon to add different paddings to your preview. Useful for checking how components behave when surrounded with white space.
 
-[Live demo](https://storybook-addon-paddings.netlify.app)
+[Live demo](https://storybook-addon-paddings.js.org)
 
 ![Demo](demo.gif)
 
