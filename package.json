@@ -1,10 +1,10 @@
 {
   "name": "storybook-addon-paddings",
   "version": "0.0.0-development",
-  "description": "A Storybook addon to add different paddings to your preview",
+  "description": "Add paddings to view components under different white space settings",
   "keywords": [
-    "storybook",
-    "addon",
+    "storybook-addons",
+    "style",
     "padding",
     "margin",
     "spacing",
@@ -19,7 +19,11 @@
     "url": "https://github.com/rbardini/storybook-addon-paddings.git"
   },
   "license": "MIT",
-  "author": "Rafael Bardini <rafael@rbardini.com> (https://rbardini.com)",
+  "author": {
+    "name": "Rafael Bardini",
+    "email": "rafael@rbardini.com",
+    "url": "https://rbardini.com/"
+  },
   "main": "dist/index.js",
   "files": [
     "dist/**/*",
@@ -82,5 +86,9 @@
     "react-dom": {
       "optional": true
     }
+  },
+  "storybook": {
+    "displayName": "Paddings",
+    "icon": "https://raw.githubusercontent.com/rbardini/storybook-addon-paddings/HEAD/icon.svg"
   }
 }
