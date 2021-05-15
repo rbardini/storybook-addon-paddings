@@ -19,14 +19,13 @@ const setStyle = (selector: string, css: string) => {
   }
 };
 
-export const withPaddings: StoryWrapper = (getStory, context) => {
+const WithPaddings: StoryWrapper = (getStory, context) => {
   const { id, globals, parameters, viewMode } = context;
   const globalsSelectedPadding = globals[PARAM_KEY]?.value;
   const paddingsConfig = parameters[PARAM_KEY];
   const selector =
     viewMode === 'docs' ? `#anchor--${id} .docs-story > div` : '.sb-show-main';
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const selectedPadding = useMemo(
     () =>
       getSelectedPadding(
@@ -36,7 +35,6 @@ export const withPaddings: StoryWrapper = (getStory, context) => {
     [paddingsConfig, globalsSelectedPadding],
   );
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const paddingStyles = useMemo(
     () => `
       ${selector} {
@@ -52,7 +50,6 @@ export const withPaddings: StoryWrapper = (getStory, context) => {
     [selector, selectedPadding],
   );
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     const selectorId =
       viewMode === 'docs' ? `addon-paddings-docs-${id}` : `addon-paddings`;
@@ -63,4 +60,4 @@ export const withPaddings: StoryWrapper = (getStory, context) => {
   return getStory(context);
 };
 
-export default withPaddings;
+export default WithPaddings;
