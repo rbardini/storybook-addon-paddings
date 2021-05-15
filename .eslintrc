@@ -5,11 +5,11 @@
     "node": true
   },
   "extends": [
+    "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "airbnb",
-    "prettier",
-    "prettier/react"
+    "prettier"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -24,8 +24,14 @@
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-use-before-define": "error",
-    "import/extensions": ["error", "ignorePackages", { "tsx": "never" }],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      { "js": "never", "tsx": "never" }
+    ],
     "import/prefer-default-export": "off",
+    "no-undef": "off",
+    "no-unused-vars": "off",
     "no-use-before-define": "off",
     "react/jsx-filename-extension": [
       "error",

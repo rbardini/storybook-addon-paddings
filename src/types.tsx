@@ -17,7 +17,3 @@ export type GlobalState = {
   name?: string;
   selected?: string;
 };
-
-export type PaddingsOptions = {
-  addDecorator?: boolean;
-};
