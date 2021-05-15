@@ -27,8 +27,8 @@
   "main": "dist/index.js",
   "files": [
     "dist/**/*",
-    "*.js",
-    "*.d.ts"
+    "preset.js",
+    "register.js"
   ],
   "scripts": {
     "prepare": "husky install",
