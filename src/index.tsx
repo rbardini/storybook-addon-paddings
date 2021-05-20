@@ -23,8 +23,10 @@ const WithPaddings: StoryWrapper = (getStory, context) => {
   const { id, globals, parameters, viewMode } = context;
   const globalsSelectedPadding = globals[PARAM_KEY]?.value;
   const paddingsConfig = parameters[PARAM_KEY];
-  const selector =
-    viewMode === 'docs' ? `#anchor--${id} .docs-story > div` : '.sb-show-main';
+  const isInDocs = viewMode === 'docs';
+  const selector = isInDocs
+    ? `#anchor--${id} .docs-story > div`
+    : '.sb-show-main';
 
   const selectedPadding = useMemo(
     () =>
@@ -51,11 +53,12 @@ const WithPaddings: StoryWrapper = (getStory, context) => {
   );
 
   useEffect(() => {
-    const selectorId =
-      viewMode === 'docs' ? `addon-paddings-docs-${id}` : `addon-paddings`;
+    const selectorId = isInDocs
+      ? `addon-paddings-docs-${id}`
+      : `addon-paddings`;
 
     setStyle(selectorId, paddingStyles);
-  }, [id, viewMode, paddingStyles]);
+  }, [id, isInDocs, paddingStyles]);
 
   return getStory(context);
 };
