@@ -55,7 +55,8 @@
     "format-check": "prettier --ignore-path .gitignore --check .",
     "lint": "eslint --ignore-path .gitignore --ext .js,.tsx .",
     "watch": "npm run build -- --watch",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "package-check": "package-check"
   },
   "dependencies": {
     "@storybook/addons": "^6.2.0",
@@ -71,6 +72,7 @@
     "@babel/preset-env": "7.14.2",
     "@babel/preset-react": "7.13.13",
     "@babel/preset-typescript": "7.13.0",
+    "@skypack/package-check": "0.2.2",
     "@types/node": "15.3.0",
     "@typescript-eslint/eslint-plugin": "4.23.0",
     "@typescript-eslint/parser": "4.23.0",
