@@ -24,7 +24,17 @@
     "email": "rafael@rbardini.com",
     "url": "https://rbardini.com/"
   },
-  "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./preset": "./preset.js",
+    "./register": "./register.js"
+  },
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
   "files": [
     "dist/**/*",
     "preset.js",
@@ -34,9 +44,9 @@
     "prepare": "husky install",
     "prebuild": "rm -rf dist",
     "build": "run-s build:*",
+    "postbuild": "tsc --declaration --emitDeclarationOnly",
     "build:cjs": "BABEL_ENV=cjs babel --extensions '.tsx' src -d dist/cjs",
     "build:esm": "babel --extensions '.tsx' src -d dist/esm",
-    "postbuild": "tsc --declaration --emitDeclarationOnly",
     "prebuild-example": "npm run build",
     "build-example": "npm run build-storybook --prefix example",
     "preexample": "npm run build",
@@ -45,7 +55,8 @@
     "format-check": "prettier --ignore-path .gitignore --check .",
     "lint": "eslint --ignore-path .gitignore --ext .js,.tsx .",
     "watch": "npm run build -- --watch",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "package-check": "package-check"
   },
   "dependencies": {
     "@storybook/addons": "^6.2.0",
@@ -56,18 +67,19 @@
     "memoizerific": "^1.11.3"
   },
   "devDependencies": {
-    "@babel/cli": "7.13.16",
-    "@babel/core": "7.14.2",
+    "@babel/cli": "7.14.3",
+    "@babel/core": "7.14.3",
     "@babel/preset-env": "7.14.2",
     "@babel/preset-react": "7.13.13",
     "@babel/preset-typescript": "7.13.0",
-    "@types/node": "15.3.0",
-    "@typescript-eslint/eslint-plugin": "4.23.0",
-    "@typescript-eslint/parser": "4.23.0",
+    "@skypack/package-check": "0.2.2",
+    "@types/node": "15.3.1",
+    "@typescript-eslint/eslint-plugin": "4.24.0",
+    "@typescript-eslint/parser": "4.24.0",
     "eslint": "7.26.0",
     "eslint-config-airbnb": "18.2.1",
     "eslint-config-prettier": "8.3.0",
-    "eslint-plugin-import": "2.23.1",
+    "eslint-plugin-import": "2.23.2",
     "eslint-plugin-jsx-a11y": "6.4.1",
     "eslint-plugin-react": "7.23.2",
     "eslint-plugin-react-hooks": "4.2.0",
