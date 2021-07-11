@@ -25,7 +25,7 @@ const WithPaddings: StoryWrapper = (getStory, context) => {
   const paddingsConfig = parameters[PARAM_KEY];
   const isInDocs = viewMode === 'docs';
   const selector = isInDocs
-    ? `#anchor--${id} .docs-story > div`
+    ? `#anchor--${id} .docs-story > div:first-child`
     : '.sb-show-main';
 
   const selectedPadding = useMemo(
