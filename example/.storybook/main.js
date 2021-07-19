@@ -4,5 +4,5 @@ module.exports = {
     '@storybook/addon-storysource',
     'storybook-addon-paddings',
   ],
-  stories: ['../src/**/*.stories.js'],
+  stories: ['../src/**/*.stories.@(js|mdx)'],
 };
