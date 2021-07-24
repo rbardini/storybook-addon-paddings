@@ -25,7 +25,12 @@ const WithPaddings: StoryWrapper = (getStory, context) => {
   const paddingsConfig = parameters[PARAM_KEY];
   const isInDocs = viewMode === 'docs';
   const selector = isInDocs
-    ? `#anchor--${id} .docs-story > div:first-child`
+    ? [
+        `#anchor--${id} .docs-story > div:first-child`,
+        // Workaround for MDX stories in docs view mode
+        // https://github.com/storybookjs/storybook/issues/14322
+        `#anchor--${id} ~ .sbdocs-preview .docs-story > div:first-child`,
+      ].join()
     : '.sb-show-main';
 
   const selectedPadding = useMemo(
@@ -38,6 +43,8 @@ const WithPaddings: StoryWrapper = (getStory, context) => {
   );
 
   const paddingStyles = useMemo(
+    // Undo default `padded` layout styles
+    // https://github.com/storybookjs/storybook/issues/12135
     () => `
       ${selector} {
         margin: 0;
