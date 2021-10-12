@@ -1,5 +1,20 @@
+import { styled } from '@storybook/theming';
 import React, { FC } from 'react';
-import { Svg, Path } from './Svg';
+
+const Svg = styled.svg<{ inline?: boolean }>(
+  {
+    // Fix rendering bugs in Chrome for hdpi
+    shapeRendering: 'inherit',
+    transform: 'translate3d(0,0,0)',
+  },
+  ({ inline }) => ({
+    display: inline ? 'inline-block' : 'block',
+  }),
+);
+
+const Path = styled.path({
+  fill: 'currentColor',
+});
 
 const PaddingIcon: FC = () => (
   <Svg viewBox="0 0 1024 1024">
