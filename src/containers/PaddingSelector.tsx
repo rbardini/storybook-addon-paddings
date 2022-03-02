@@ -1,4 +1,10 @@
-import React, { FC, useCallback, useMemo } from 'react';
+import React, {
+  ComponentProps,
+  FC,
+  ReactNode,
+  useCallback,
+  useMemo,
+} from 'react';
 import memoize from 'memoizerific';
 import { useParameter, useGlobals } from '@storybook/api';
 import {
@@ -84,18 +90,28 @@ const PaddingSelector: FC = () => {
     [globals, updateGlobals],
   );
 
+  const renderTooltip = useCallback<
+    Extract<
+      ComponentProps<typeof WithTooltip>['tooltip'],
+      (p: unknown) => ReactNode
+    >
+  >(
+    ({ onHide }) => (
+      <TooltipLinkList
+        links={getDisplayedItems(values, selectedPadding, ({ selected }) => {
+          onPaddingChange(selected);
+          onHide();
+        })}
+      />
+    ),
+    [onPaddingChange, selectedPadding, values],
+  );
+
   return isEnabled(values) ? (
     <WithTooltip
       placement="top"
       trigger="click"
-      tooltip={({ onHide }) => (
-        <TooltipLinkList
-          links={getDisplayedItems(values, selectedPadding, ({ selected }) => {
-            onPaddingChange(selected);
-            onHide();
-          })}
-        />
-      )}
+      tooltip={renderTooltip}
       closeOnClick
     >
       <IconButton
