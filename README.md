@@ -5,7 +5,7 @@
 [![Dependencies status](https://img.shields.io/david/rbardini/storybook-addon-paddings)](https://david-dm.org/rbardini/storybook-addon-paddings)
 [![devDependencies status](https://img.shields.io/david/dev/rbardini/storybook-addon-paddings)](https://david-dm.org/rbardini/storybook-addon-paddings?type=dev)
 
-A [Storybook](https://storybook.js.org) addon to add different paddings to your preview. Useful for checking how components behave when surrounded with white space.
+🔲 A [Storybook](https://storybook.js.org) addon to add different paddings to your preview. Useful for checking how components behave when surrounded with white space.
 
 ![Demo](demo.gif)
 
