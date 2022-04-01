@@ -5,6 +5,9 @@ import { PaddingWithDefault, PaddingsParameter, Padding } from './types';
 export const isEnabled = (values: PaddingWithDefault[]): boolean =>
   values.length > 0;
 
+export const isReducedMotionPreferred = (): boolean =>
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 export const normalizeValues = (
   parameters: PaddingsParameter,
 ): PaddingWithDefault[] => {

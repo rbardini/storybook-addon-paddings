@@ -1,7 +1,11 @@
 import { StoryWrapper, useEffect, useMemo } from '@storybook/addons';
 
 import { DEFAULT_PADDING, PARAM_KEY } from './constants';
-import { normalizeValues, getSelectedPadding } from './helpers';
+import {
+  isReducedMotionPreferred,
+  getSelectedPadding,
+  normalizeValues,
+} from './helpers';
 
 const setStyle = (selector: string, css: string) => {
   const existingStyle = document.getElementById(selector);
@@ -42,7 +46,7 @@ const WithPaddings: StoryWrapper = (getStory, context) => {
       ${selector} {
         margin: 0;
         padding: ${selectedPadding} !important;
-        transition: padding .3s;
+        ${isReducedMotionPreferred() ? '' : 'transition: padding .3s;'}
       }
 
       ${selector} .innerZoomElementWrapper > div {
