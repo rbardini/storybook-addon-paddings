@@ -2,8 +2,7 @@
 
 [![npm package version](https://img.shields.io/npm/v/storybook-addon-paddings)](https://www.npmjs.com/package/storybook-addon-paddings)
 [![Build status](https://img.shields.io/github/workflow/status/rbardini/storybook-addon-paddings/Main)](https://github.com/rbardini/storybook-addon-paddings/actions)
-[![Dependencies status](https://img.shields.io/david/rbardini/storybook-addon-paddings)](https://david-dm.org/rbardini/storybook-addon-paddings)
-[![devDependencies status](https://img.shields.io/david/dev/rbardini/storybook-addon-paddings)](https://david-dm.org/rbardini/storybook-addon-paddings?type=dev)
+[![Dependencies status](https://img.shields.io/librariesio/release/npm/storybook-addon-paddings)](https://libraries.io/npm/storybook-addon-paddings)
 
 🔲 A [Storybook](https://storybook.js.org) addon to add different paddings to your preview. Useful for checking how components behave when surrounded with white space.
 
