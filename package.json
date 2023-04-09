@@ -26,72 +26,73 @@
   },
   "exports": {
     ".": {
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js"
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
     },
-    "./preset": "./preset.js",
-    "./register": "./register.js"
+    "./manager": {
+      "require": "./dist/manager.js",
+      "import": "./dist/manager.mjs",
+      "types": "./dist/manager.d.ts"
+    },
+    "./preview": {
+      "require": "./dist/preview.js",
+      "import": "./dist/preview.mjs",
+      "types": "./dist/preview.d.ts"
+    },
+    "./package.json": "./package.json"
   },
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
-  "types": "./dist/types/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
-    "preset.js",
-    "register.js"
+    "*.js",
+    "*.d.ts"
   ],
   "scripts": {
-    "prepare": "husky install",
-    "prebuild": "rm -rf dist",
-    "build": "run-s build:*",
-    "postbuild": "tsc --declaration --emitDeclarationOnly",
-    "build:cjs": "BABEL_ENV=cjs babel --extensions '.tsx' src -d dist/cjs",
-    "build:esm": "babel --extensions '.tsx' src -d dist/esm",
-    "prebuild-example": "npm run build",
-    "build-example": "npm run build-storybook --prefix example",
-    "preexample": "npm run build",
-    "example": "npm run storybook --prefix example",
+    "prebuild": "npm run clean",
+    "build": "tsup",
+    "build-storybook": "storybook build",
+    "build:watch": "npm run build -- --watch",
+    "clean": "rimraf ./dist",
     "format": "prettier --ignore-path .gitignore --write .",
     "format-check": "prettier --ignore-path .gitignore --check .",
-    "lint": "eslint --ignore-path .gitignore --ext .js,.tsx .",
-    "watch": "npm run build -- --watch",
-    "type-check": "tsc --noEmit",
-    "package-check": "package-check"
+    "package-check": "package-check",
+    "prepare": "husky install",
+    "start": "concurrently \"npm run build:watch\" \"npm run storybook -- --quiet\"",
+    "storybook": "storybook dev -p 6006",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@storybook/addons": "^6.2.0",
-    "@storybook/api": "^6.2.0",
-    "@storybook/components": "^6.2.0",
-    "@storybook/theming": "^6.2.0",
-    "core-js": "^3.12.0",
     "memoizerific": "^1.11.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.17.6",
-    "@babel/core": "7.17.8",
-    "@babel/preset-env": "7.16.11",
-    "@babel/preset-react": "7.16.7",
-    "@babel/preset-typescript": "7.16.7",
-    "@skypack/package-check": "0.2.2",
-    "@types/node": "17.0.23",
-    "@typescript-eslint/eslint-plugin": "5.17.0",
-    "@typescript-eslint/parser": "5.17.0",
-    "eslint": "8.12.0",
-    "eslint-config-airbnb": "19.0.4",
-    "eslint-config-prettier": "8.5.0",
-    "eslint-plugin-import": "2.25.4",
-    "eslint-plugin-jsx-a11y": "6.5.1",
-    "eslint-plugin-react": "7.29.4",
-    "eslint-plugin-react-hooks": "4.4.0",
-    "husky": "7.0.4",
-    "lint-staged": "12.3.7",
-    "npm-run-all": "4.1.5",
-    "prettier": "2.6.1",
-    "react": "16.14.0",
-    "react-dom": "16.14.0",
-    "typescript": "4.6.3"
+    "@skypack/package-check": "^0.2.0",
+    "@storybook/react": "^7.0.0",
+    "@storybook/react-vite": "^7.0.0",
+    "@types/node": "^18.15.0",
+    "@types/react": "^18.0.0",
+    "@vitejs/plugin-react": "^3.1.0",
+    "concurrently": "^8.0.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.2.0",
+    "prettier": "^2.3.0",
+    "prettier-plugin-packagejson": "^2.4.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "rimraf": "^4.0.0",
+    "storybook": "^7.0.0",
+    "tsup": "^6.6.0",
+    "typescript": "^4.9.0",
+    "vite": "^4.1.0"
   },
   "peerDependencies": {
+    "@storybook/components": "^7.0.0",
+    "@storybook/manager-api": "^7.0.0",
+    "@storybook/preview-api": "^7.0.0",
+    "@storybook/theming": "^7.0.0",
+    "@storybook/types": "^7.0.0",
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
     "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
   },
@@ -105,6 +106,17 @@
   },
   "storybook": {
     "displayName": "Paddings",
+    "supportedFrameworks": [
+      "react",
+      "vue",
+      "angular",
+      "web-components",
+      "ember",
+      "html",
+      "svelte",
+      "preact",
+      "react-native"
+    ],
     "icon": "https://raw.githubusercontent.com/rbardini/storybook-addon-paddings/HEAD/icon.svg"
   }
 }

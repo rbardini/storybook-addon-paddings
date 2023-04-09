@@ -1,0 +1,9 @@
+.card {
+  background-color: #fff;
+  border-radius: 1em;
+  box-shadow: 0 2em 4em rgba(0, 0, 0, 0.2);
+  display: inline-block;
+  font-family: sans-serif;
+  line-height: 1.5;
+  padding: 4em;
+}
