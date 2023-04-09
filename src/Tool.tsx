@@ -1,22 +1,18 @@
+import { IconButton, WithTooltip, TooltipLinkList } from '@storybook/components'
+import { useParameter, useGlobals } from '@storybook/manager-api'
 import React, {
   ComponentProps,
   FC,
   ReactNode,
   useCallback,
   useMemo,
-} from 'react';
-import memoize from 'memoizerific';
-import { useParameter, useGlobals } from '@storybook/api';
-import {
-  IconButton,
-  WithTooltip,
-  TooltipLinkList,
-} from '@storybook/components';
+} from 'react'
+import memoize from 'memoizerific'
 
-import { DEFAULT_PADDING, PARAM_KEY } from '../constants';
-import { getSelectedPadding, normalizeValues, isEnabled } from '../helpers';
-import PaddingIcon from '../components/PaddingIcon';
-import { PaddingWithDefault, Item, GlobalState } from '../types';
+import { PaddingIcon } from './components/PaddingIcon'
+import { DEFAULT_PADDING, PARAM_KEY } from './constants'
+import { getSelectedPadding, normalizeValues, isEnabled } from './helpers'
+import { PaddingWithDefault, Item, GlobalState } from './types'
 
 const createPaddingSelectorItem = memoize(1000)(
   (
@@ -33,7 +29,7 @@ const createPaddingSelectorItem = memoize(1000)(
     active,
     right: hasValue ? value : undefined,
   }),
-);
+)
 
 const getDisplayedItems = memoize(10)(
   (
@@ -41,7 +37,7 @@ const getDisplayedItems = memoize(10)(
     selected: string,
     change: (arg: GlobalState) => void,
   ) => {
-    const availablePaddingSelectorItems: Item[] = [];
+    const availablePaddingSelectorItems: Item[] = []
 
     if (selected !== DEFAULT_PADDING) {
       availablePaddingSelectorItems.push(
@@ -53,7 +49,7 @@ const getDisplayedItems = memoize(10)(
           false,
           change,
         ),
-      );
+      )
     }
 
     availablePaddingSelectorItems.push(
@@ -67,28 +63,28 @@ const getDisplayedItems = memoize(10)(
           change,
         ),
       ),
-    );
+    )
 
-    return availablePaddingSelectorItems;
+    return availablePaddingSelectorItems
   },
-);
+)
 
-const PaddingSelector: FC = () => {
-  const [globals, updateGlobals] = useGlobals();
-  const options = useParameter(PARAM_KEY, null);
-  const values = normalizeValues(options);
+export const Tool: FC = () => {
+  const [globals, updateGlobals] = useGlobals()
+  const options = useParameter(PARAM_KEY, null)
+  const values = normalizeValues(options)
 
   const selectedPadding = useMemo(
     () => getSelectedPadding(values, globals[PARAM_KEY]?.value),
     [globals, values],
-  );
+  )
 
   const onPaddingChange = useCallback(
     (value: string) => {
-      updateGlobals({ [PARAM_KEY]: { ...globals[PARAM_KEY], value } });
+      updateGlobals({ [PARAM_KEY]: { ...globals[PARAM_KEY], value } })
     },
     [globals, updateGlobals],
-  );
+  )
 
   const renderTooltip = useCallback<
     Extract<
@@ -99,13 +95,13 @@ const PaddingSelector: FC = () => {
     ({ onHide }) => (
       <TooltipLinkList
         links={getDisplayedItems(values, selectedPadding, ({ selected }) => {
-          onPaddingChange(selected);
-          onHide();
+          onPaddingChange(selected)
+          onHide()
         })}
       />
     ),
     [onPaddingChange, selectedPadding, values],
-  );
+  )
 
   return isEnabled(values) ? (
     <WithTooltip
@@ -122,7 +118,5 @@ const PaddingSelector: FC = () => {
         <PaddingIcon />
       </IconButton>
     </WithTooltip>
-  ) : null;
-};
-
-export default PaddingSelector;
+  ) : null
+}

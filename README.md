@@ -1,7 +1,7 @@
 # Storybook Paddings Addon
 
 [![npm package version](https://img.shields.io/npm/v/storybook-addon-paddings)](https://www.npmjs.com/package/storybook-addon-paddings)
-[![Build status](https://img.shields.io/github/workflow/status/rbardini/storybook-addon-paddings/Main)](https://github.com/rbardini/storybook-addon-paddings/actions)
+[![Build status](https://img.shields.io/github/actions/workflow/status/rbardini/storybook-addon-paddings/main.yml)](https://github.com/rbardini/storybook-addon-paddings/actions)
 [![Dependencies status](https://img.shields.io/librariesio/release/npm/storybook-addon-paddings)](https://libraries.io/npm/storybook-addon-paddings)
 
 🔲 A [Storybook](https://storybook.js.org) addon to add different paddings to your preview. Useful for checking how components behave when surrounded with white space.
@@ -16,15 +16,19 @@
 npm install --save-dev storybook-addon-paddings
 ```
 
-within [`.storybook/main.js`](https://storybook.js.org/docs/react/configure/overview#configure-your-storybook-project):
-
 ```js
-module.exports = {
+// .storybook/main.js
+export default {
   addons: ['storybook-addon-paddings'],
-};
-```
+}
 
-See [`example`](example) for a minimal working setup.
+// .storybook/preview.js
+export default {
+  parameters: {
+    layout: 'fullscreen', // remove default Storybook padding
+  },
+}
+```
 
 ## Configuration
 
@@ -42,7 +46,7 @@ export const parameters = {
     ],
     default: 'Medium',
   },
-};
+}
 ```
 
 You can also configure on per-story or per-component basis using [parameter inheritance](https://storybook.js.org/docs/react/writing-stories/parameters#component-parameters):
@@ -53,6 +57,7 @@ You can also configure on per-story or per-component basis using [parameter inhe
 // Set padding options for all Button stories
 export default {
   title: 'Button',
+  component: Button,
   parameters: {
     paddings: {
       values: [
@@ -63,11 +68,14 @@ export default {
       default: 'Large',
     },
   },
-};
+}
 
 // Disable addon in Button/Large story only
-export const Large = Template.bind({});
-Large.parameters = {
-  paddings: { disable: true },
-};
+export const Large {
+  parameters: {
+    paddings: { disable: true },
+  },
+}
 ```
+
+See other [story examples](./src/stories/Card.stories.ts).
