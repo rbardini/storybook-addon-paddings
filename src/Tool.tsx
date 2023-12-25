@@ -2,7 +2,7 @@ import { IconButton, WithTooltip, TooltipLinkList } from '@storybook/components'
 import { useParameter, useGlobals } from '@storybook/manager-api'
 import React, {
   ComponentProps,
-  FC,
+  memo,
   ReactNode,
   useCallback,
   useMemo,
@@ -31,45 +31,43 @@ const createPaddingSelectorItem = memoize(1000)(
   }),
 )
 
-const getDisplayedItems = memoize(10)(
-  (
-    list: PaddingWithDefault[],
-    selected: string,
-    change: (arg: GlobalState) => void,
-  ) => {
-    const availablePaddingSelectorItems: Item[] = []
+const getDisplayedItems = memoize(10)((
+  list: PaddingWithDefault[],
+  selected: string,
+  change: (arg: GlobalState) => void,
+) => {
+  const availablePaddingSelectorItems: Item[] = []
 
-    if (selected !== DEFAULT_PADDING) {
-      availablePaddingSelectorItems.push(
-        createPaddingSelectorItem(
-          'reset',
-          'Clear paddings',
-          DEFAULT_PADDING,
-          false,
-          false,
-          change,
-        ),
-      )
-    }
-
+  if (selected !== DEFAULT_PADDING) {
     availablePaddingSelectorItems.push(
-      ...list.map(({ name, value }) =>
-        createPaddingSelectorItem(
-          null,
-          name,
-          value,
-          true,
-          value === selected,
-          change,
-        ),
+      createPaddingSelectorItem(
+        'reset',
+        'Clear paddings',
+        DEFAULT_PADDING,
+        false,
+        false,
+        change,
       ),
     )
+  }
 
-    return availablePaddingSelectorItems
-  },
-)
+  availablePaddingSelectorItems.push(
+    ...list.map(({ name, value }) =>
+      createPaddingSelectorItem(
+        null,
+        name,
+        value,
+        true,
+        value === selected,
+        change,
+      ),
+    ),
+  )
 
-export const Tool: FC = () => {
+  return availablePaddingSelectorItems
+})
+
+export const Tool = memo(() => {
   const [globals, updateGlobals] = useGlobals()
   const options = useParameter(PARAM_KEY, null)
   const values = normalizeValues(options)
@@ -111,12 +109,13 @@ export const Tool: FC = () => {
       closeOnClick
     >
       <IconButton
-        key="padding"
+        key="paddings"
         active={selectedPadding !== DEFAULT_PADDING}
         title="Change the paddings of the preview"
+        placeholder="Paddings"
       >
         <PaddingIcon />
       </IconButton>
     </WithTooltip>
   ) : null
-}
+})
