@@ -8,7 +8,7 @@
 
 ![Demo](demo.gif)
 
-[View demo →](https://storybook-addon-paddings.js.org)
+[View demo →](https://storybook-addon-paddings.rbrd.in)
 
 ## Installation
 
