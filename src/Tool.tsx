@@ -102,17 +102,11 @@ export const Tool = memo(() => {
   )
 
   return isEnabled(values) ? (
-    <WithTooltip
-      placement="top"
-      trigger="click"
-      tooltip={renderTooltip}
-      closeOnClick
-    >
+    <WithTooltip placement="top" trigger="click" tooltip={renderTooltip}>
       <IconButton
         key="paddings"
         active={selectedPadding !== DEFAULT_PADDING}
         title="Change the paddings of the preview"
-        placeholder="Paddings"
       >
         <PaddingIcon />
       </IconButton>
