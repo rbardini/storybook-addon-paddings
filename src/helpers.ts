@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { DEFAULT_PADDING } from './constants'
 import { PaddingWithDefault, PaddingsParameter, Padding } from './types'
 

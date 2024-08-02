@@ -4,6 +4,7 @@ const preview: Preview = {
   parameters: {
     layout: 'fullscreen',
   },
+  tags: ['autodocs'],
 }
 
 export default preview
