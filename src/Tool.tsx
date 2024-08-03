@@ -76,6 +76,7 @@ export const Tool = memo(() => {
           })}
         />
       )}
+      closeOnOutsideClick
     >
       <IconButton
         key="paddings"
