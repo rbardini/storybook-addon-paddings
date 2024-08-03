@@ -59,9 +59,6 @@
     "storybook": "storybook dev -p 6006",
     "type-check": "tsc --noEmit"
   },
-  "dependencies": {
-    "memoizerific": "^1.11.0"
-  },
   "devDependencies": {
     "@skypack/package-check": "^0.2.0",
     "@storybook/addon-docs": "^8.0.0",
