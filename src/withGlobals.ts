@@ -1,9 +1,9 @@
-import { useEffect, useMemo } from '@storybook/preview-api'
 import type {
   Renderer,
   PartialStoryFn as StoryFunction,
   StoryContext,
-} from '@storybook/types'
+} from 'storybook/internal/types'
+import { useEffect, useMemo } from 'storybook/preview-api'
 
 import { DEFAULT_PADDING, PARAM_KEY } from './constants'
 import {
