@@ -1,11 +1,15 @@
-import { IconButton, WithTooltip, TooltipLinkList } from '@storybook/components'
-import { useParameter, useGlobals } from '@storybook/manager-api'
 import React, { memo, useCallback, useMemo } from 'react'
+import {
+  IconButton,
+  WithTooltip,
+  TooltipLinkList,
+} from 'storybook/internal/components'
+import { useParameter, useGlobals } from 'storybook/manager-api'
 
 import { PaddingIcon } from './components/PaddingIcon'
 import { DEFAULT_PADDING, PARAM_KEY } from './constants'
 import { getSelectedPadding, normalizeValues, isEnabled } from './helpers'
-import { PaddingWithDefault, Item, GlobalState } from './types'
+import type { PaddingWithDefault, Item, GlobalState } from './types'
 
 const createItem = (
   id: string | undefined,
@@ -59,7 +63,7 @@ export const Tool = memo(() => {
   )
 
   const onPaddingChange = useCallback(
-    (value: string) =>
+    (value?: string) =>
       updateGlobals({ [PARAM_KEY]: { ...globals[PARAM_KEY], value } }),
     [globals, updateGlobals],
   )
