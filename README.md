@@ -16,47 +16,73 @@
 npm install --save-dev storybook-addon-paddings
 ```
 
-```js
-// .storybook/main.js
-export default {
-  addons: ['storybook-addon-paddings'],
-}
+Register the addon in `.storybook/main.ts`:
 
-// .storybook/preview.js
-export default {
+```ts
+// .storybook/main.ts
+
+// Replace your-framework with the framework you are using (e.g., react-vite, nextjs-vite)
+import { defineMain } from '@storybook/your-framework/node'
+
+export default defineMain({
+  // ...rest of config
+  addons: ['storybook-addon-paddings'],
+})
+```
+
+Register the addon's preview annotations in `.storybook/preview.ts`:
+
+```ts
+// .storybook/preview.ts
+
+// Replace your-framework with the framework you are using (e.g., react-vite, nextjs-vite)
+import { definePreview } from '@storybook/your-framework'
+
+import paddings from 'storybook-addon-paddings'
+
+export default definePreview({
+  // ...rest of preview
+  addons: [paddings()], // 👈 register the addon here
   parameters: {
     layout: 'fullscreen', // remove default Storybook padding
   },
-}
+})
 ```
 
 ## Configuration
 
-The paddings toolbar comes with small, medium and large options by default, but you can configure your own set of paddings via the `paddings` [parameter](https://storybook.js.org/docs/react/writing-stories/parameters).
+The paddings toolbar comes with small, medium and large options by default, but you can configure your own set of paddings via the `paddings` [parameter](https://storybook.js.org/docs/writing-stories/parameters).
 
-To configure for all stories, set the `paddings` parameter in [`.storybook/preview.js`](https://storybook.js.org/docs/react/configure/overview#configure-story-rendering):
+To configure for all stories, set the `paddings` parameter in [`.storybook/preview.ts`](https://storybook.js.org/docs/configure):
 
-```js
-export const parameters = {
-  paddings: {
-    values: [
-      { name: 'Small', value: '16px' },
-      { name: 'Medium', value: '32px' },
-      { name: 'Large', value: '64px' },
-    ],
-    default: 'Medium',
+```ts
+// .storybook/preview.ts
+
+export default definePreview({
+  parameters: {
+    paddings: {
+      values: [
+        { name: 'Small', value: '16px' },
+        { name: 'Medium', value: '32px' },
+        { name: 'Large', value: '64px' },
+      ],
+      default: 'Medium',
+    },
   },
-}
+})
 ```
 
-You can also configure on per-story or per-component basis using [parameter inheritance](https://storybook.js.org/docs/react/writing-stories/parameters#component-parameters):
+You can also configure on per-story or per-component basis using [parameter inheritance](https://storybook.js.org/docs/writing-stories/parameters#component-parameters):
 
-```js
-// Button.stories.js
+```ts
+// Button.stories.ts
+
+import preview from '../.storybook/preview'
+
+import { Button } from './Button'
 
 // Set padding options for all Button stories
-export default {
-  title: 'Button',
+const meta = preview.meta({
   component: Button,
   parameters: {
     paddings: {
@@ -68,14 +94,14 @@ export default {
       default: 'Large',
     },
   },
-}
+})
 
 // Disable addon in Button/Large story only
-export const Large {
+export const Large = meta.story({
   parameters: {
     paddings: { disable: true },
   },
-}
+})
 ```
 
 See other [story examples](./src/stories/Card.stories.ts).
