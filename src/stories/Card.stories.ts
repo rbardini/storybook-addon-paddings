@@ -1,23 +1,19 @@
-import type { Meta, StoryObj } from '@storybook/react-vite'
+import preview from '../../.storybook/preview'
 
 import { Card } from './Card'
 
-type Story = StoryObj<typeof Card>
-
-const meta: Meta<typeof Card> = {
+const meta = preview.meta({
   title: 'Example',
   component: Card,
-}
+})
 
-export default meta
-
-export const PresetOptions: Story = {
+export const PresetOptions = meta.story({
   args: {
     children: 'This story uses preset padding options. (Small, Medium & Large)',
   },
-}
+})
 
-export const CustomOptions: Story = {
+export const CustomOptions = meta.story({
   args: {
     children: 'This story uses custom padding options. (xs, sm, md, lg & xl)',
   },
@@ -32,22 +28,22 @@ export const CustomOptions: Story = {
       ],
     },
   },
-}
+})
 
-export const DefaultOption: Story = {
+export const DefaultOption = meta.story({
   args: {
     children: 'This story sets a default padding option. (Medium)',
   },
   parameters: {
     paddings: { default: 'Medium' },
   },
-}
+})
 
-export const Disabled: Story = {
+export const Disabled = meta.story({
   args: {
     children: 'This story disables paddings.',
   },
   parameters: {
     paddings: { disable: true },
   },
-}
+})

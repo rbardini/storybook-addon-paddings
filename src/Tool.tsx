@@ -1,56 +1,10 @@
 import React, { memo, useCallback, useMemo } from 'react'
-import {
-  IconButton,
-  WithTooltip,
-  TooltipLinkList,
-} from 'storybook/internal/components'
-import { useParameter, useGlobals } from 'storybook/manager-api'
+import { Select } from 'storybook/internal/components'
+import { useGlobals, useParameter } from 'storybook/manager-api'
 
 import { PaddingIcon } from './components/PaddingIcon'
 import { DEFAULT_PADDING, PARAM_KEY } from './constants'
-import { getSelectedPadding, normalizeValues, isEnabled } from './helpers'
-import type { PaddingWithDefault, Item, GlobalState } from './types'
-
-const createItem = (
-  id: string | undefined,
-  name: string,
-  value: string,
-  hasValue: boolean,
-  active: boolean,
-  change: (arg: { selected: string; name: string }) => void,
-): Item => ({
-  id: id || name,
-  title: name,
-  onClick: () => change({ selected: value, name }),
-  active,
-  right: hasValue ? value : undefined,
-})
-
-const getDisplayedItems = (
-  list: PaddingWithDefault[],
-  selected: string,
-  change: (arg: GlobalState) => void,
-) =>
-  list.reduce<Item[]>(
-    (acc, { name, value }) => (
-      acc.push(
-        createItem(undefined, name, value, true, value === selected, change),
-      ),
-      acc
-    ),
-    selected === DEFAULT_PADDING
-      ? []
-      : [
-          createItem(
-            'reset',
-            'Clear paddings',
-            DEFAULT_PADDING,
-            false,
-            false,
-            change,
-          ),
-        ],
-  )
+import { getSelectedPadding, isEnabled, normalizeValues } from './helpers'
 
 export const Tool = memo(() => {
   const [globals, updateGlobals] = useGlobals()
@@ -68,27 +22,22 @@ export const Tool = memo(() => {
     [globals, updateGlobals],
   )
 
+  const selectOptions = useMemo(
+    () => values.map(({ name, value }) => ({ title: name, value })),
+    [values],
+  )
+
   return isEnabled(values) ? (
-    <WithTooltip
-      placement="top"
-      trigger="click"
-      tooltip={({ onHide }) => (
-        <TooltipLinkList
-          links={getDisplayedItems(values, selectedPadding, ({ selected }) => {
-            onPaddingChange(selected)
-            onHide()
-          })}
-        />
-      )}
-      closeOnOutsideClick
-    >
-      <IconButton
-        key="paddings"
-        active={selectedPadding !== DEFAULT_PADDING}
-        title="Change the paddings of the preview"
-      >
-        <PaddingIcon />
-      </IconButton>
-    </WithTooltip>
+    <Select
+      key="paddings"
+      ariaLabel="Change the paddings of the preview"
+      tooltip="Change the paddings of the preview"
+      icon={<PaddingIcon />}
+      options={selectOptions}
+      defaultOptions={selectedPadding}
+      onSelect={selected => onPaddingChange(selected as string)}
+      onReset={() => onPaddingChange(DEFAULT_PADDING)}
+      resetLabel="Clear paddings"
+    />
   ) : null
 })
